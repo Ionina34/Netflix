@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html  xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div  class="d-flex justify-content-center flex-wrap">
+		<div th:each="film: ${actors}">
+			<div>
+				<div class="card m-1" style="width: 18rem">
+		  			
+		  			<div class="card-body">
+		    			<h5 th:text="${film.name}" class="card-title"></h5>
+	
+		  			</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

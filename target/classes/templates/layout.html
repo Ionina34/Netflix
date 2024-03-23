@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/film.css">
+<link rel="stylesheet" href="/css/caruselRandom.css">
+<link rel="stylesheet" href="/css/carusel.css">
+
+</head>
+<body>
+	<div id="app" class="container-fluid">
+		<header>
+			<div class="header">
+				<div class="rigth">
+					<nav class="nav-container">
+						<div class="container">
+							<img class="logo" th:src="@{..//logo/Logo.png}"> <img
+								class="logo2" th:src="@{..//logo/Logo2.png}">
+						</div>
+					</nav>
+					<div class="menu">
+						<ul>
+							<li class="nav-item"><a
+								th:class="${activePage=='main'}?'active-link':''"
+								aria-current="page" href="/films">Главная</a></li>
+							<li class="nav-item"><a
+								th:class="${activePage=='films'}?'active-link':''"
+								aria-current="page" href="/films/all">Библиотека</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="left">
+					<div class="search-container">
+						<form action="/index.php">
+							<input type="text" placeholder="Search.." name="search">
+						</form>
+					</div>
+				</div>
+			</div>
+		</header>
+		<div class="body">
+			<div layout:fragment="content"></div>
+		</div>
+	</div>
+	<script src="/js/bootstrap.bundle.min.js"></script>
+	<script src="/js/caruselRandom.js"></script>
+	<script src="/js/carusel.js"></script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="container">
+		<div layout:fragment="content">
+			<h1>Рекомендуем:</h1>
+			<hr>
+			<div class="container-carusel">
+				<div class="carousel__list">
+					<ul th:each="film,state:${films}">
+						<li><img class="carousel__item"
+							th:data-pos="${state.count-5}" th:src="'../'+${film.image}"></li>
+					</ul>
+				</div>
+				<hr>
+				<div th:each="film,state:${films}">
+					<div th:class="containerText" th:data-pos="${state.count-5}">
+						<h2>
+							<a href="" th:text="${film.name}"></a>
+						</h2>
+						<div class="text description" th:text="${film.des}"></div>
+						<table>
+							<tr>
+								<td th:class="title">Дата релиза:</td>
+								<td
+									th:text="${#temporals.format(film.release_date,'dd-MM-yyyy')}"></td>
+							</tr>
+							<tr>
+								<td th:class="title">Продолжительность:</td>
+								<td th:text="${film.length} +' мин.'">мин.</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+
+			<div class="genre" th:each="genre,state: ${genres}">
+				<div th:id="'wrapper-'+${state.count}">
+					<h1 th:text="${genre.name}+':'"></h1>
+					<div th:id="'carousel-'+${state.count}">
+						<div th:id="'content-'+${state.count}">
+							<div th:if="${state.count==1}" th:each="film: ${filmsByGenreOne}">
+								<a href="#"> <img
+									th:src="'../'+${film.image}"
+									th:alt="${film.name}" class="item"></a> 
+							</div>
+							<div th:if="${state.count==2}" th:each="film: ${filmsByGenreTwo}">
+								<a href="#"> <img
+									th:src="'../'+${film.image}"
+									th:alt="${film.name}" class="item"></a> 
+							</div>
+							<div th:if="${state.count==3}" th:each="film: ${filmsByGenreTree}">
+								<a href="#"> <img
+									th:src="'../'+${film.image}"
+									th:alt="${film.name}" class="item"></a> 
+							</div>
+						</div>
+					</div>
+					<button th:id="'prev-'+${state.count}">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+							viewBox="0 0 24 24">
+                <path fill="none" d="M0 0h24v24H0V0z" />
+                <path
+								d="M15.61 7.41L14.2 6l-6 6 6 6 1.41-1.41L11.03 12l4.58-4.59z" />
+            </svg>
+					</button>
+					<button th:id="'next-'+${state.count}">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+							viewBox="0 0 24 24">
+                <path fill="none" d="M0 0h24v24H0V0z" />
+                <path
+								d="M10.02 6L8.61 7.41 13.19 12l-4.58 4.59L10.02 18l6-6-6-6z" />
+            </svg>
+					</button>
+				</div>
+				<hr>
+			</div>
+
+		</div>
+	</div>
+
+</body>
+</html>

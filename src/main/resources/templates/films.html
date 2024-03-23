@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8">
+<title>Films</title>
+</head>
+<body>
+	<div  class="d-flex justify-content-center flex-wrap" layout:fragment="content">
+		<div th:each="film: ${films}">
+			<div>
+				<div class="card m-1" style="width: 18rem">
+		  			<img style="height: 400px" th:src="'../'+${film.image}" class="card-img-top" alt="...">
+		  			<div class="card-body">
+		    			<h5 th:text="${film.name}" class="card-title"></h5>
+		    			<h5 th:text="${#temporals.format(film.release_date,'dd-MM-yyyy')}" class="card-title"></h5>
+		   				<div th:text="${film.des}" style="height: 150px" class="overflow-auto"></div>
+		    			<div class="d-inline-block">
+			    			<a class="btn btn-warning"
+						th:href="@{/films/edit/{id}(id=${film.id})}">Редактировать</a> 
+			    			<form method="post" th:action="@{/films/delete/{id}(id=${film.id})}" class="d-inline-block">
+	        					<input type="hidden" name="id" value="${film.id}">
+	        					<input class="btn btn-primary" type="submit" value="Удалить">
+	    					</form>
+			    		</div>
+		  			</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
