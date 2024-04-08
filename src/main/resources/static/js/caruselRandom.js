@@ -4,6 +4,7 @@ const carouselItems = document.querySelectorAll('.carousel__item');
 const caruselInfo=document.querySelectorAll('.containerText')
 const elems = Array.from(carouselItems);
 const info=Array.from(caruselInfo);
+var carusel = new Map(JSON.parse(localStorage.getItem('carusel')))
 
 carouselList.addEventListener('click', function (event) {
   var newActive = event.target;
@@ -17,7 +18,6 @@ carouselList.addEventListener('click', function (event) {
 
 const update = function(newActive) {
   const newActivePos= newActive.dataset.pos;
-  console.log(newActive);
   if(newActivePos!=='0'){
     const current = elems.find((elem) => elem.dataset.pos == 0);
     const prev = elems.find((elem) => elem.dataset.pos == -1);
@@ -55,12 +55,13 @@ const update = function(newActive) {
         var itemPos = item.dataset.pos;
 
         item.dataset.pos = getPos(itemPos, newActivePos)
+        carusel.set(item.id, item.dataset.pos);
         });
+        localStorage.setItem('carusel', JSON.stringify(Array.from(carusel.entries())));
     }
 };
 
 const getPos = function (current, active) {
-	console.log(active);
     if(active>0){
         if(current>0)
             {

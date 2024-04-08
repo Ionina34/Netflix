@@ -110,6 +110,7 @@ img[data-pos="-3"], img[data-pos="3"], img[data-pos="-4"], img[data-pos="4"],
 }
 
 .description {
+	margin-top:7px;
 	max-height: 200px;
 	overflow: auto;
 }

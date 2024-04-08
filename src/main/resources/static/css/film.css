@@ -8,6 +8,7 @@
 
 .photoActor{
     height: 250px;
+    width: 200px;
 }
 
 .left{
@@ -25,7 +26,6 @@
 
 .right{
     padding-left: 150px;
-    width: 400px;
     margin-top: 50px;
 }
 
@@ -33,6 +33,8 @@
     display: flex;
     flex-direction: column;
     text-align: center;
+     background: rgb(24, 24, 24);
+     border:none;
 }
 
 th{
@@ -76,12 +78,6 @@ th{
     margin-top: -5px;
 }
 
-.a a{
-    font-size: 14px;
-    height: 20px;
-    word-break: break-all;
-}
-
 .a p{
     font-size: 14px;
     height: 20px;
@@ -94,6 +90,8 @@ th{
 
 .description{
     max-height:200px;
+    min-width:250px;
+    max-width:450px;
     overflow: auto;
 }
 

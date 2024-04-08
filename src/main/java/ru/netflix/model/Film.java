@@ -29,11 +29,11 @@ public class Film {
 	private LocalDate release_date;
 	private String length;
 	
-	@Column(name="create_at")
-	private LocalDate create_at;
+	@Column(name="created_at")
+	private LocalDate created_at;
 	
-	@Column(name="update_at")
-	private LocalDate update_at;
+	@Column(name="updated_at")
+	private LocalDate updated_at;
 	
 	@Column(name="image")
 	private String image;

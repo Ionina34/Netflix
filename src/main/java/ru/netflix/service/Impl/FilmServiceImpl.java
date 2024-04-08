@@ -5,8 +5,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
@@ -26,11 +28,22 @@ public class FilmServiceImpl implements FilmService{
 	private final FilmRepository repository;
 	
 	@Override
+	public Page<Film> findAllFilms(Pageable pageable) {
+		return repository.findAll(pageable);
+	}
+
+	@Override
 	public List<Film> findAllFilms() {
 		return repository.findAll();
 	}
 	
 	@Override
+	public Page<Film> findByFilterContainingIgnoreCase(String filter, Pageable pageable) {
+		return repository.findByNameContainingIgnoreCase(filter, pageable);
+	}
+	
+	@Override
+	@Cacheable("filmCash")
 	public List<Film> findRandomFilms(){
 		return repository.getTenRandomValues();
 	}
@@ -44,12 +57,17 @@ public class FilmServiceImpl implements FilmService{
 	public List<Film> getFilmsByGenreId(Long genreId){
 		return repository.findFilmByGenresId(genreId);
 	}
+	
+	@Override
+	public List<Film> getFilmsByActorId(Long actorId){
+		return repository.findFilmsByActorsId(actorId);
+	}
 
 	@Override
 	public void saveFilm(Film film) {
 		film.setImage("images/"+film.getName()+".jpg");
-		film.setCreate_at(LocalDate.now());
-		film.setUpdate_at(LocalDate.now());
+		film.setCreated_at(LocalDate.now());
+		film.setUpdated_at(LocalDate.now());
 		repository.save(film);
 	}
 
@@ -66,7 +84,7 @@ public class FilmServiceImpl implements FilmService{
 				//film.setImage("images/"+film.getName()+".jpg");
 			}
 			
-			film.setUpdate_at(null);
+			film.setUpdated_at(null);
 			repository.save(film);
 		}
 	}
@@ -75,6 +93,5 @@ public class FilmServiceImpl implements FilmService{
 	public void deleteFilm(Long id) {
 		repository.deleteById(id);
 	}
-	
 
 }

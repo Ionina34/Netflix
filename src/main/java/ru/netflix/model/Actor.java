@@ -25,11 +25,11 @@ public class Actor {
 	@Column(name = "brief_biography")
 	private String brief_biography;
 
-	@Column(name = "create_at")
-	private LocalDate create_at;
+	@Column(name = "created_at")
+	private LocalDate created_at;
 
-	@Column(name = "update_at")
-	private LocalDate update_at;
+	@Column(name = "updated_at")
+	private LocalDate updated_at;
 
 	@Column(name = "photo")
 	private String photo;

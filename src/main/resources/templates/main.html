@@ -14,15 +14,16 @@
 			<div class="container-carusel">
 				<div class="carousel__list">
 					<ul th:each="film,state:${films}">
-						<li><img class="carousel__item"
-							th:data-pos="${state.count-5}" th:src="'../'+${film.image}"></li>
+						<li><img th:id="${state.index}" class="carousel__item"
+							th:src="'../'+${film.image}"></li>
 					</ul>
 				</div>
 				<hr>
 				<div th:each="film,state:${films}">
-					<div th:class="containerText" th:data-pos="${state.count-5}">
+					<div th:id="${state.index}" th:class="containerText">
 						<h2>
-							<a href="" th:text="${film.name}"></a>
+							<a id="more-info" th:href="@{/films/{id}(id=${film.id})}"
+								th:text="${film.name}"></a>
 						</h2>
 						<div class="text description" th:text="${film.des}"></div>
 						<table>
@@ -46,19 +47,38 @@
 					<div th:id="'carousel-'+${state.count}">
 						<div th:id="'content-'+${state.count}">
 							<div th:if="${state.count==1}" th:each="film: ${filmsByGenreOne}">
-								<a href="#"> <img
-									th:src="'../'+${film.image}"
-									th:alt="${film.name}" class="item"></a> 
+								<div class="card">
+										<a id="more-info"
+										th:href="@{/films/{id}(id=${film.id})}">
+										 <img
+										th:src="'../'+${film.image}" th:alt="${film.name}"
+										class="item"></a>
+									<a th:href="@{/films/{id}(id=${film.id})}"
+										th:text="${film.name}"></a> 
+								</div>
 							</div>
 							<div th:if="${state.count==2}" th:each="film: ${filmsByGenreTwo}">
-								<a href="#"> <img
-									th:src="'../'+${film.image}"
-									th:alt="${film.name}" class="item"></a> 
+								<div class="card">
+										<a id="more-info"
+										th:href="@{/films/{id}(id=${film.id})}">
+										 <img
+										th:src="'../'+${film.image}" th:alt="${film.name}"
+										class="item"></a>
+									<a th:href="@{/films/{id}(id=${film.id})}"
+										th:text="${film.name}"></a> 
+								</div>
 							</div>
-							<div th:if="${state.count==3}" th:each="film: ${filmsByGenreTree}">
-								<a href="#"> <img
-									th:src="'../'+${film.image}"
-									th:alt="${film.name}" class="item"></a> 
+							<div th:if="${state.count==3}"
+								th:each="film: ${filmsByGenreTree}">
+								<div class="card">
+										<a id="more-info"
+										th:href="@{/films/{id}(id=${film.id})}">
+										 <img
+										th:src="'../'+${film.image}" th:alt="${film.name}"
+										class="item"></a>
+									<a th:href="@{/films/{id}(id=${film.id})}"
+										th:text="${film.name}"></a> 
+								</div>
 							</div>
 						</div>
 					</div>
@@ -85,5 +105,24 @@
 		</div>
 	</div>
 
+
+	<th:block layout:fragment="script">
+		<script src="/js/remember.js"></script>
+		<script src="/js/caruselRandom.js"></script>
+		<script src="/js/carusel.js"></script>
+		
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+			crossorigin="anonymous"></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"
+			crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.min.js"
+			crossorigin="anonymous"></script>
+			<script type = "text/JavaScript"
+			 src="https://MomentJS.com/downloads/moment-with-locales.js">
+			</script>
+	<script src="/js/search.js"></script>
+	</th:block>
 </body>
 </html>

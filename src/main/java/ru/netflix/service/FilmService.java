@@ -2,16 +2,19 @@ package ru.netflix.service;
 
 import java.util.List;
 
-import ru.netflix.model.Actor;
+import org.springframework.data.domain.*;
+
 import ru.netflix.model.Film;
-import ru.netflix.model.Genre;
 
 public interface FilmService {
+	Page<Film> findAllFilms(Pageable pageable);
 	List<Film> findAllFilms();
+	Page<Film> findByFilterContainingIgnoreCase(String filter,Pageable pageable);
 	List<Film> findRandomFilms();
 	
 	Film getFilmById(Long id);
 	List<Film> getFilmsByGenreId(Long genreId);
+	List<Film> getFilmsByActorId(Long actorId);
 	
 	void saveFilm(Film film);
 	void updateFilm(Long id,Film updateFilm);

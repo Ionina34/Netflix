@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import ru.netflix.model.Genre;
 
 public interface GenreRepository extends JpaRepository<Genre, Long> {
-	@Query(value="SELECT id,name,create_at,update_at FROM genres ORDER BY RAND() LIMIT 3",
+	@Query(value="SELECT id,name,created_at,updated_at FROM genres ORDER BY RAND() LIMIT 3",
 			nativeQuery = true)
 	List<Genre> getTreeRanfomValues();
 	
