@@ -7,11 +7,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div class="container">
+	<div id="container" class="container">
 		<div layout:fragment="content">
 			<h1>Рекомендуем:</h1>
 			<hr>
-			<div class="container-carusel">
+			<div id="container-carusel" style="display: none" class="container-carusel">
 				<div class="carousel__list">
 					<ul th:each="film,state:${films}">
 						<li><img th:id="${state.index}" class="carousel__item"

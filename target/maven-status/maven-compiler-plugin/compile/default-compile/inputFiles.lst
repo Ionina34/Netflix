@@ -18,13 +18,13 @@ D:\It's my\JAVA\Netflix\src\main\java\ru\netflix\service\Impl\CountryServiceImpl
 D:\It's my\JAVA\Netflix\src\main\java\ru\netflix\repository\GenreRepository.java
 D:\It's my\JAVA\Netflix\src\main\java\ru\netflix\repository\ScreenwriterRepository.java
 D:\It's my\JAVA\Netflix\src\main\java\ru\netflix\service\ActorService.java
-D:\It's my\JAVA\Netflix\src\main\java\ru\netflix\ViewModel\FilmViewModel.java
 D:\It's my\JAVA\Netflix\src\main\java\ru\netflix\controller\FilmController.java
 D:\It's my\JAVA\Netflix\src\main\java\ru\netflix\repository\DirectorRepository.java
 D:\It's my\JAVA\Netflix\src\main\java\ru\netflix\service\FilmService.java
 D:\It's my\JAVA\Netflix\src\main\java\ru\netflix\model\Country.java
 D:\It's my\JAVA\Netflix\src\main\java\ru\netflix\service\DirectorService.java
 D:\It's my\JAVA\Netflix\src\main\java\ru\netflix\model\ServiceResponce.java
+D:\It's my\JAVA\Netflix\src\main\java\ru\netflix\controller\Entities\FilmViewModel.java
 D:\It's my\JAVA\Netflix\src\main\java\ru\netflix\service\ScreenwriterService.java
 D:\It's my\JAVA\Netflix\src\main\java\ru\netflix\model\Actor.java
 D:\It's my\JAVA\Netflix\src\main\java\ru\netflix\controller\ActorController.java

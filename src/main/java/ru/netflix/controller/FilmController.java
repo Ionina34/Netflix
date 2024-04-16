@@ -2,19 +2,16 @@ package ru.netflix.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import lombok.RequiredArgsConstructor;
+import ru.netflix.controller.Entities.*;
 import ru.netflix.model.Film;
 import ru.netflix.model.Genre;
-import ru.netflix.service.FilmService;
-import ru.netflix.service.GenreService;
+import ru.netflix.service.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -22,6 +19,10 @@ import ru.netflix.service.GenreService;
 public class FilmController {
 	private final FilmService filmService;
 	private final GenreService genreService;
+	private final CountryService countryService;
+	private final ActorService actorService;
+	private final DirectorService directorService;
+	private final ScreenwriterService screenwriterService;
 	
 	@GetMapping
 	public String mainHtml(Model model) {
@@ -51,8 +52,10 @@ public class FilmController {
 
 	@GetMapping("/{id}")
 	public String showFilmDetails(@PathVariable("id") Long id,Model model) {
-		Film film =filmService.getFilmById(id);
-		model.addAttribute("films",film);
+		FilmViewModel viewModel = new FilmViewModel(filmService.getFilmById(id), genreService.findGenresByFilmsId(id),
+				countryService.findCountriesByFilmsId(id), actorService.findActorsByFilmsId(id),
+				directorService.findDirectorsByFilmsId(id), screenwriterService.findScreenwritersByFilmsId(id));
+		model.addAttribute("ModelFilm", viewModel);
 		return "film-details";
 	}
 }

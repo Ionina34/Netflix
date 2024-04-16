@@ -1,4 +1,5 @@
 ru\netflix\repository\ActorRepository.class
+ru\netflix\controller\Entities\FilmViewModel.class
 ru\netflix\service\CountryService.class
 ru\netflix\service\GenreService.class
 ru\netflix\model\Director.class
@@ -6,7 +7,6 @@ ru\netflix\AppConfiguration.class
 ru\netflix\service\DirectorService.class
 ru\netflix\controller\FilmRestController.class
 ru\netflix\service\Impl\ScreenwriterServiceImpl.class
-ru\netflix\ViewModel\FilmViewModel.class
 ru\netflix\model\SearchCriteria.class
 ru\netflix\SpringFilmApplication.class
 ru\netflix\repository\ScreenwriterRepository.class

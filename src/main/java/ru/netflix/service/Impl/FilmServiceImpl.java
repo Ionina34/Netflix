@@ -43,7 +43,7 @@ public class FilmServiceImpl implements FilmService{
 	}
 	
 	@Override
-	@Cacheable("filmCash")
+	@Cacheable("film-random")
 	public List<Film> findRandomFilms(){
 		return repository.getTenRandomValues();
 	}

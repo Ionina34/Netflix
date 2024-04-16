@@ -1,4 +1,4 @@
-document.getElementById('body').style.display = "none";
+document.getElementById('container-carusel').style.display = "none";
 
 document.getElementById('main').onclick=function(){
 	localStorage.setItem("main","reload");
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		}
 		SaveState();
 	}
-	document.getElementById('body').style.display = "block";
+	document.getElementById('container-carusel').style.display = "block";
 });
 
 function SaveState() {

@@ -2,6 +2,7 @@ package ru.netflix.service.Impl;
 
 import java.util.List;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,11 @@ public class GenreServiceImpl implements GenreService{
 	@Override
 	public List<Genre> getRandomGenres() {
 		return genreRepository.getTreeRanfomValues();
+	}
+
+	@Override
+	public List<Genre> findGenresByFilmsId(Long filmId) {
+		return genreRepository.findGenresByFilmsId(filmId);
 	}
 
 }

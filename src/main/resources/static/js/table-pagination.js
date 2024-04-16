@@ -96,17 +96,26 @@ $(document).ready(function() {
 		$.each(response.content, function(i, film) {
 			let noteRow = '<div>' +
 				'<div class="card m-1" style="width: 18rem">' +
-				'<img style="height: 400px" src="../' + film.image + '"' +
-				'class="card-img-top" alt="...">' +
 				'<div class="card-body">' +
-				'<h5 class="card-title"' + film.name + '</h5>' +
-				'<h5 class="card-title">' + moment(film.release_date).format('DD-MM-YYYY') + '</h5>' +
+				'<a href="/films/'+film.id+'">'+
+				'<img style="height: 400px" src="../' + film.image + '"' +
+				'class="card-img-top" alt="..."></a>' +
+				'<a href="/films/'+film.id+'"><h4 class="card-title">' + film.name + '</h4></a>' +
+				'<h5 class="fs-6">' + moment(film.release_date).format('DD-MM-YYYY') + '</h5>' +
 				'<div  style="height: 150px"' +
 				'class="overflow-auto">' + film.des + '</div>' +
 				'</div></div></div>';
 			$('#films').append(noteRow);
 	
 		});
+		/*<a id="more-info"
+										th:href="@{/films/{id}(id=${film.id})}">
+										 <img
+										th:src="'../'+${film.image}" th:alt="${film.name}"
+										class="item"></a>
+									<a th:href="@{/films/{id}(id=${film.id})}"
+										th:text="${film.name}"></a> */
+		
 
 		$('ul.pagination').empty();
 		buildPagination(response);
