@@ -7,25 +7,24 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import ru.netflix.model.Actor;
 import ru.netflix.model.Film;
-import ru.netflix.repository.ActorRepository;
+import ru.netflix.model.User;
 import ru.netflix.repository.FilmRepository;
-import ru.netflix.repository.GenreRepository;
+import ru.netflix.repository.UserRepository;
 import ru.netflix.service.FilmService;
 
 @Service
-@RequiredArgsConstructor
 public class FilmServiceImpl implements FilmService{
 
-	private final FilmRepository repository;
+	@Autowired
+	private FilmRepository repository;
+	@Autowired
+	private UserRepository userRepository;
 	
 	@Override
 	public Page<Film> findAllFilms(Pageable pageable) {

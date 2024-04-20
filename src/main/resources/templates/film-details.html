@@ -12,7 +12,7 @@
 			<hr>
 			<div class="top">
 				<div class="left">
-					<img class="imageFilm" th:src="'../'+${ModelFilm.film.image}"
+					<img class="imageFilm" th:src="'../images/'+${ModelFilm.film.image}"
 						alt="">
 				</div>
 				<div class="right">
@@ -98,7 +98,7 @@
 										<a id="more-info"
 										th:href="@{/actor/{id}(id=${actor.id})}">
 										 <img class="photoActor"
-										th:src="'../'+${actor.photo}" th:alt="${actor.name}"></a>
+										th:src="'../images/'+${actor.photo}" th:alt="${actor.name}"></a>
 									<a th:href="@{/actor/{id}(id=${actor.id})}"
 									 th:text="${actor.name}"></a> 
 								</div>

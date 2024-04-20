@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE>
 <html xmlns:th="https://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout}">
@@ -6,16 +6,19 @@
 <meta charset="UTF-8">
 <title>Films</title>
 </head>
-<body>
+<div>
 	<div layout:fragment="content">
-		<ul class="pagination justify-content-center" style="margin:20px 0; cursor: pointer;"></ul>
+		<ul class="pagination justify-content-center"
+			style="margin: 20px 0; cursor: pointer;"></ul>
 		<div id="films" class="d-flex justify-content-center flex-wrap w-100">
 		</div>
-		
-		<ul class="pagination justify-content-center" style="margin:20px 0; cursor: pointer;"></ul>
-	</div>
 
-	<th:block layout:fragment="script">
+		<ul class="pagination justify-content-center"
+			style="margin: 20px 0; cursor: pointer;"></ul>
+	</div>
+</div>
+
+<th:block layout:fragment="script">
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
 			crossorigin="anonymous"></script>
 		<script
@@ -29,5 +32,4 @@
 			</script>
 		<script src="/js/table-pagination.js"></script>
 	</th:block>
-</body>
 </html>
