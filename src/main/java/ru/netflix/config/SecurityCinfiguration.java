@@ -25,14 +25,19 @@ public class SecurityCinfiguration{
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http.csrf(AbstractHttpConfigurer::disable)
-				.authorizeHttpRequests(auth -> auth.requestMatchers("films/**").permitAll())
-				.formLogin(AbstractAuthenticationFilterConfigurer::permitAll).build();
+				.authorizeHttpRequests(auth -> auth.requestMatchers("films").permitAll()
+						.requestMatchers("registration").permitAll()
+						.requestMatchers("films/**").authenticated())
+				.formLogin(form -> form
+						.loginPage("/login")
+						.permitAll()
+					)
+				.build();
 	}
 
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
-		return (web) -> web.ignoring().requestMatchers("/images/films/**", "/images/actors/**",
-				"/images/directors/**","/images/screenwriters/**",
+		return (web) -> web.ignoring().requestMatchers("/images/**",
 				"/js/**", "/css/**", "/webjars/**","/logo/**");
 	}
 

@@ -10,4 +10,6 @@ import ru.netflix.model.User;
 @Repository
 public interface UserRepository extends JpaRepository<User,Long>{
 	Optional<User> findByName(String username);
+	
+	Optional<User> findByEmail(String email);
 }

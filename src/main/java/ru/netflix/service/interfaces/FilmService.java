@@ -1,4 +1,4 @@
-package ru.netflix.service;
+package ru.netflix.service.interfaces;
 
 import java.util.List;
 

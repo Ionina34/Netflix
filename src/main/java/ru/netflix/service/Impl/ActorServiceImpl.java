@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import ru.netflix.model.Actor;
 import ru.netflix.repository.ActorRepository;
-import ru.netflix.service.ActorService;
+import ru.netflix.service.interfaces.ActorService;
 
 @Service
 public class ActorServiceImpl implements ActorService{

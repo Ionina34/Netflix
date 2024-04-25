@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import ru.netflix.model.Country;
 import ru.netflix.repository.CountryRepository;
-import ru.netflix.service.CountryService;
+import ru.netflix.service.interfaces.CountryService;
 
 @Service
 public class CountryServiceImpl implements CountryService {

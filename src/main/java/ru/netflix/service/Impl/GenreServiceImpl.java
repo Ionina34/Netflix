@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import ru.netflix.model.Genre;
 import ru.netflix.repository.GenreRepository;
-import ru.netflix.service.GenreService;
+import ru.netflix.service.interfaces.GenreService;
 
 @Service
 public class GenreServiceImpl implements GenreService{

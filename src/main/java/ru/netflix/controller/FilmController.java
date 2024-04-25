@@ -8,10 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import lombok.RequiredArgsConstructor;
-import ru.netflix.controller.Entities.*;
+import ru.netflix.controller.entities.*;
 import ru.netflix.model.Film;
 import ru.netflix.model.Genre;
-import ru.netflix.service.*;
+import ru.netflix.service.interfaces.*;
 
 @Controller
 @RequiredArgsConstructor

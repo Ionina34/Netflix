@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.RequiredArgsConstructor;
-import ru.netflix.service.ActorService;
-import ru.netflix.service.FilmService;
+import ru.netflix.service.interfaces.ActorService;
+import ru.netflix.service.interfaces.FilmService;
 
 @Controller
 @RequiredArgsConstructor

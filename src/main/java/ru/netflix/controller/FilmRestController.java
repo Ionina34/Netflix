@@ -2,14 +2,12 @@ package ru.netflix.controller;
 
 import org.springframework.data.domain.*;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import ru.netflix.model.Film;
-import ru.netflix.service.FilmService;
+import ru.netflix.service.interfaces.FilmService;
 
 @RestController
 @RequiredArgsConstructor

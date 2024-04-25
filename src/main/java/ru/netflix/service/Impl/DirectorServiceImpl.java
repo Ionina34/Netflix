@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import ru.netflix.model.Director;
 import ru.netflix.repository.DirectorRepository;
-import ru.netflix.service.DirectorService;
+import ru.netflix.service.interfaces.DirectorService;
 
 @Service
 public class DirectorServiceImpl implements DirectorService{
