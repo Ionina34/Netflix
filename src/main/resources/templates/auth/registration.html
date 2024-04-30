@@ -1,5 +1,6 @@
 <!DOCTYPE>
-<html>
+<html xmlns:th="https://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/css/bootstrap.min.css" />
@@ -10,31 +11,43 @@
 		<div class="d-flex justify-content-center" style="margin-top: 10%">
 			<div
 				class="d-flex  justify-content-center align-items-center flex-column"
-				style="backdrop-filter: blur(5px); width: 450px; height: 500px">
+				style="backdrop-filter: blur(30px); width: 450px; height: 500px">
 				<h1 class="text-3xl font-medium" style="color: rgb(185, 3, 3);">Регистрация</h1>
 				<a th:href="@{/films}" style="color: rgb(185, 3, 3);"
 					class="mt-2 fs-6">Вернуться на главную</a>
-					<p th:text="${message}" style="color: rgb(185, 3, 3);"></p>
-					
-					<p th:text="${userr}" style="color: rgb(185, 3, 3);"></p>
+				<p th:text="${message}" style="color: rgb(185, 3, 3);"></p>
+				<table>
+					<tr th:each="error : ${errors}">
+						<td><a style="color: rgb(185, 3, 3); text-decoration: none" class="mt-2 fs-6"
+							th:text="${error}"></a></td>
+					</tr>
+				</table>
+
 				<form th:action="@{/registration}" th:object="${user}"
 					class="d-flex  align-items-center flex-column mb-3" method="POST">
 					<div>
 						<input type="text" class="form-control mt-2" style="width: 320px;"
-							name="name" placeholder="Имя" />
+							name="name" placeholder="Имя" required="required" 
+							data-th-value="${user != null ? user.name : user.name}"/>
 					</div>
 					<div>
 						<input type="text" class="form-control mt-2" style="width: 320px;"
-							name="email" placeholder="Email" />
+							name="email"
+							placeholder="Eamil"
+							required="required"
+							data-th-value="${user != null ? user.email : user.email}" />
 					</div>
 					<div>
 						<input class="form-control mt-2" style="width: 320px;"
-							type="password" name="password" placeholder="Пароль" />
+							type="password" name="password" placeholder="Пароль"
+							required="required" 
+							data-th-value="${user != null ? user.password : user.password}"/>
 					</div>
 					<div>
 						<input class="form-control mt-2" style="width: 320px;"
-							type="password" name="matchingPassword" 
-							placeholder="Повторите пароль" />
+							type="password" name="matchingPassword"
+							placeholder="Повторите пароль" required="required" 
+							data-th-value="${user != null ? user.matchingPassword : user.matchingPassword}"/>
 					</div>
 
 					<div>
@@ -46,4 +59,5 @@
 				</form>
 			</div>
 		</div>
+	</div>
 </body>

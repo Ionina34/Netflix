@@ -1,40 +1,42 @@
 <!DOCTYPE>
-<html>
+<html xmlns:th="https://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/css/bootstrap.min.css" />
 <title>Films</title>
 <body
-	style="background: url('https://www.digiseller.ru/preview/1006164/p1_3563057_6d3c0f43.jpg')"><di
-v class="d-flex justify-content-center" style="margin-top: 10%">
-	<div
-		class="d-flex  justify-content-center align-items-center flex-column"
-		style="backdrop-filter: blur(5px); width: 450px; height: 500px">
-		 <p th:each="error: ${#fields.errors()}" 
-          th:text="${error}">Validation error</p>
-		<h1 class="text-3xl font-medium" style="color: rgb(185, 3, 3);">Вход</h1>
+	style="background: url('https://www.digiseller.ru/preview/1006164/p1_3563057_6d3c0f43.jpg')">
+	<div class="d-flex justify-content-center" style="margin-top: 10%">
+		<div
+			class="d-flex  justify-content-center align-items-center flex-column"
+			style="backdrop-filter: blur(5px); width: 450px; height: 500px">
+			<h1 class="text-3xl font-medium" style="color: rgb(185, 3, 3);">Вход</h1>
 
-		<a th:href="@{/films}" style="color: rgb(185, 3, 3);"
-			class="mt-2 fs-6">Вернуться на главную</a>
+			<a th:href="@{/films}" style="color: rgb(185, 3, 3);"
+				class="mt-2 fs-6">Вернуться на главную</a>
 
-		<div class="alert alert-danger text-center" th:if="${param.error}">Invalid</div>
-		<form method="POST" th:action="@{/login}"
-			class="d-flex  align-items-center flex-column mb-3">
-			<div>
-			
-				<input type="text" class="form-control mt-2"  style="width:320px;" name="username" placeholder="Имя" />
-			</div>
-			<div>
-				<input type="password" class="form-control mt-4"  style="width:320px;" name="password" placeholder="Пароль" />
-			</div>
+			<div class="alert alert-danger text-center" th:if="${param.error}">Неверный логин или пароль</div>
+			<form method="POST" th:action="@{/login}"
+				class="d-flex  align-items-center flex-column mb-3">
+				<div>
 
-			<div>
-				<a th:href="@{/registration}" style="color: rgb(185, 3, 3);" class="mt-2 fs-5">Регистрация</a>
-			</div>
+					<input type="text" class="form-control mt-2" style="width: 320px;"
+					name="username" placeholder="Имя" />
+				</div>
+				<div>
+					<input type="password" class="form-control mt-4"
+						style="width: 320px;" name="password" placeholder="Пароль" />
+				</div>
 
-			<input type="submit" value="Войти" />
+				<div>
+					<a th:href="@{/registration}" style="color: rgb(185, 3, 3);"
+						class="mt-2 fs-5">Регистрация</a>
+				</div>
+
+				<input type="submit" value="Войти" />
+			</form>
+		</div>
 	</div>
-</div>
-
 </body>
 </html>

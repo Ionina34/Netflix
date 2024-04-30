@@ -11,7 +11,7 @@ import ru.netflix.controller.entities.validator.EmailValidator;
 @Constraint(validatedBy = EmailValidator.class)
 @Documented
 public @interface ValidEmail {
-	String message() default "Неправильный email";
+	String message() default "Неправильный формат email";
 	Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

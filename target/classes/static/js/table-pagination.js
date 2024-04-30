@@ -95,7 +95,8 @@ $(document).ready(function() {
 		console.log("S")
 		$.each(response.content, function(i, film) {
 			let noteRow = '<div>' +
-				'<div class="card m-1" style="width: 18rem">' +
+				'<div class="card m-1 bg-dark rounded d-flex" style="width: 18rem">' +
+				'<div class="heart ms-auto"></div>'+
 				'<div class="card-body">' +
 				'<a href="/films/'+film.id+'">'+
 				'<img style="height: 400px" src="../images/' + film.image + '"' +
