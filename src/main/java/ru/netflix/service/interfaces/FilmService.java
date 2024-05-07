@@ -15,6 +15,7 @@ public interface FilmService {
 	Film getFilmById(Long id);
 	List<Film> getFilmsByGenreId(Long genreId);
 	List<Film> getFilmsByActorId(Long actorId);
+	List<Film>getFavFilmByUserIdAndFilmId(Long userId,Long filmsId);
 	
 	void saveFilm(Film film);
 	void updateFilm(Long id,Film updateFilm);

@@ -1,3 +1,4 @@
+
 $(document).ready(function() {
 	let totalPages = 1;
 
@@ -96,7 +97,7 @@ $(document).ready(function() {
 		$.each(response.content, function(i, film) {
 			let noteRow = '<div>' +
 				'<div class="card m-1 bg-dark rounded d-flex" style="width: 18rem">' +
-				'<div class="heart ms-auto"></div>'+
+				'<div class="heart ms-auto" onclick="addAMovieToFavorites('+film.id+')"></div>'+
 				'<div class="card-body">' +
 				'<a href="/films/'+film.id+'">'+
 				'<img style="height: 400px" src="../images/' + film.image + '"' +
@@ -195,6 +196,6 @@ $(document).ready(function() {
 		event.preventDefault();
 		search_films($("#search-control").val(), 0);
 	});
-
+	
 });
 

@@ -19,7 +19,7 @@ import org.thymeleaf.templateresolver.UrlTemplateResolver;
 import ru.netflix.service.Impl.MyUserDetailsService;
 
 @Configuration
-public class SecurityCinfiguration{
+public class SecurityCinfiguration {
 	@Bean
 	public UserDetailsService userDetailsService() {
 		return new MyUserDetailsService();
@@ -30,7 +30,9 @@ public class SecurityCinfiguration{
 		return http.csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests(auth -> auth.requestMatchers("films").permitAll()
 						.requestMatchers("registration").anonymous()
-						.requestMatchers("films/**").authenticated())
+						.requestMatchers("user/**").permitAll()
+						.requestMatchers("films/**").authenticated()
+						.anyRequest().permitAll())
 				.formLogin(form -> form
 						.loginPage("/login")
 						.defaultSuccessUrl("/films")
@@ -41,8 +43,7 @@ public class SecurityCinfiguration{
 
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
-		return (web) -> web.ignoring().requestMatchers("/images/**",
-				"/js/**", "/css/**", "/webjars/**","/logo/**");
+		return (web) -> web.ignoring().requestMatchers("/images/**", "/js/**", "/css/**", "/webjars/**", "/logo/**");
 	}
 
 	@Bean
@@ -57,5 +58,5 @@ public class SecurityCinfiguration{
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 }

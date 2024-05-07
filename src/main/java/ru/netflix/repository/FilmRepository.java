@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import ru.netflix.model.Film;
@@ -24,7 +25,13 @@ public interface FilmRepository extends JpaRepository<Film, Long> {
 	
 	List<Film> findFilmsByActorsId(Long actorId);
 	List<Film> findFilmsByCountriesId(Long countryId);
-	List<Film> findFilmByDirectorsId(Long directorsId);
-	List<Film> findFilmByGenresId(Long genresId);
-	List<Film> findFilmByScreenwritersId(Long screewriterId);
+	List<Film> findFilmsByDirectorsId(Long directorsId);
+	List<Film> findFilmsByGenresId(Long genresId);
+	List<Film> findFilmsByScreenwritersId(Long screewriterId);
+	List<Film> findFilmsByUsersId(Long userId);
+	
+	  @Query("SELECT f FROM Film f "
+			  + "JOIN f.users u WHERE u.id = :userId AND f.id = :filmId")
+	    List<Film> getFavFilmByUserIdAndFilmId(@Param("userId") Long userId, @Param("filmId") Long filmId);
+	
 }

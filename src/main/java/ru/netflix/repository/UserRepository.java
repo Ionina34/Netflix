@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import ru.netflix.model.Genre;
 import ru.netflix.model.User;
 
 @Repository
@@ -14,5 +15,5 @@ public interface UserRepository extends JpaRepository<User,Long>{
 	
 	Optional<User> findByEmail(String email);
 	
-	//<T> List<T> findFavoriteFilmsByUser();
+	List<User> findUsersByFilmsId(Long filmId);
 }

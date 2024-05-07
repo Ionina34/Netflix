@@ -8,11 +8,15 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
 @Table(name="films")
+@NoArgsConstructor
+@Getter
+@Setter
 public class Film {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -74,4 +78,11 @@ public class Film {
 			mappedBy = "films")
 	@JsonIgnore
 	private Set<Screenwriter> screenwriters=new HashSet<>();
+	
+	@ManyToMany(fetch = FetchType.LAZY,
+			cascade = {CascadeType.REMOVE,
+					CascadeType.REFRESH},
+			mappedBy = "films")
+	@JsonIgnore
+	private Set<User> users=new HashSet<>();
 }

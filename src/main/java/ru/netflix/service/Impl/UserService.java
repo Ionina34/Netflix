@@ -1,6 +1,7 @@
 package ru.netflix.service.Impl;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -42,5 +43,15 @@ public class UserService implements IUserService{
 	private boolean EmailExists(String email) {
         return (repository.findByEmail(email).isPresent());
     }
+
+	@Override
+	public Optional<User> findByEmail(String email) {
+		return repository.findByEmail(email);
+	}
+
+	@Override
+	public User save(User user) {
+		return repository.save(user);
+	}
 
 }

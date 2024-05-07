@@ -1,8 +1,5 @@
 package ru.netflix.controller;
 
-import java.util.HashMap;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
