@@ -1,5 +1,6 @@
 package ru.netflix.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,9 @@ public class FilmController {
 	
 	@GetMapping
 	public String mainHtml(Model model) {
-		List<Film> films= filmService.findRandomFilms();
+		//List<Film> films= filmService.findRandomFilms();
+		List<Film> films= filmService.getTop10FilmsByAverageRating();
+		System.out.println(films);
 		ArrayList<Genre> genres=new ArrayList<>(genreService.getRandomGenres());
 		
 		List<Film> genreOne=filmService.getFilmsByGenreId(genres.get(0).getId());
@@ -44,18 +47,23 @@ public class FilmController {
 	
 	@GetMapping("/all")
 	public String findAllFilm(Model model){
-		List<Film> films= filmService.findAllFilms();
-		model.addAttribute("films", films);
 		model.addAttribute("activePage","films");
 		return "films";
 	}
 
 	@GetMapping("/{id}")
 	public String showFilmDetails(@PathVariable("id") Long id,Model model) {
+
 		FilmViewModel viewModel = new FilmViewModel(filmService.getFilmById(id), genreService.findGenresByFilmsId(id),
 				countryService.findCountriesByFilmsId(id), actorService.findActorsByFilmsId(id),
 				directorService.findDirectorsByFilmsId(id), screenwriterService.findScreenwritersByFilmsId(id));
 		model.addAttribute("ModelFilm", viewModel);
 		return "film-details";
+	}
+	
+	@GetMapping("/fav")
+	public String showFavouritesFilms(Model model,Principal principal) {
+		model.addAttribute("activePage","fav");
+		return "favourites";
 	}
 }

@@ -8,13 +8,17 @@ import ru.netflix.model.Film;
 
 public interface FilmService {
 	Page<Film> findAllFilms(Pageable pageable);
+	Page<Film> findFilmsByUsersId(Long userId,Pageable pageable);
 	List<Film> findAllFilms();
 	Page<Film> findByFilterContainingIgnoreCase(String filter,Pageable pageable);
+	
 	List<Film> findRandomFilms();
+	List<Film> getTop10FilmsByAverageRating();
 	
 	Film getFilmById(Long id);
 	List<Film> getFilmsByGenreId(Long genreId);
 	List<Film> getFilmsByActorId(Long actorId);
+	List<Film> getFilmsByUsersId(Long userId);
 	List<Film>getFavFilmByUserIdAndFilmId(Long userId,Long filmsId);
 	
 	void saveFilm(Film film);

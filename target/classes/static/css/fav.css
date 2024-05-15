@@ -1,0 +1,38 @@
+.film{
+	position: relative;
+}
+
+.full-stars {
+    text-align: center;
+   position: absolute;
+   top:540px;
+   left:35px;
+}
+.full-stars .rating-group {
+    display: inline-flex;
+}
+.full-stars input {
+    position: absolute;
+    left: -9999px;
+}
+.full-stars label {
+    margin: 0;
+    cursor: pointer;
+}
+.full-stars label svg {
+    margin: 2px;
+    height: 40px;
+    width: 40px;
+    fill: rgb(185, 3, 3) ;
+    transition: fill 0.3s;
+}
+.full-stars input:checked ~ label svg {
+    fill: #B5B5B5;
+}
+.full-stars .rating-group:hover label svg {
+    fill: rgb(185, 3, 3);
+}
+.full-stars .rating-group input:hover ~ label svg {
+    fill: #B5B5B5;
+}
+

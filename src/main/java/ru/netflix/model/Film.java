@@ -85,4 +85,11 @@ public class Film {
 			mappedBy = "films")
 	@JsonIgnore
 	private Set<User> users=new HashSet<>();
+	
+	@ManyToMany(fetch = FetchType.LAZY,
+			cascade = {CascadeType.REMOVE,
+					CascadeType.REFRESH},
+			mappedBy = "ratedFilms")
+	@JsonIgnore
+	private Set<User> userWhoRated=new HashSet<>();
 }

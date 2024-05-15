@@ -13,20 +13,20 @@ import ru.netflix.service.interfaces.FilmService;
 @RequiredArgsConstructor
 public class FilmRestController {
 	private final FilmService filmService;
-	
+
 	@GetMapping("/films/all/get")
-	public Page<Film> getAllFilms(Pageable pageable){
+	public Page<Film> getAllFilms(Pageable pageable) {
 		/*
 		 * ServiceResponce<List<Film>> response=new
 		 * ServiceResponce<>("success",filmService.findAllFilms()); return new
 		 * ResponseEntity<Object>(response, HttpStatus.OK);
 		 */
-		
+
 		return filmService.findAllFilms(pageable);
 	}
-	
+
 	@GetMapping("/films/search")
-	public Page<Film> getFilterFilms(Pageable pageable,@RequestParam(name = "filter") String filter){
+	public Page<Film> getFilterFilms(Pageable pageable, @RequestParam(name = "filter") String filter) {
 		return filmService.findByFilterContainingIgnoreCase(filter, pageable);
 	}
 }

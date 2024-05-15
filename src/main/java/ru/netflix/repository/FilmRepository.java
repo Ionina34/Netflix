@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import jakarta.persistence.TypedQuery;
 import ru.netflix.model.Film;
 
 @Repository
@@ -20,8 +21,22 @@ public interface FilmRepository extends JpaRepository<Film, Long> {
 			nativeQuery = true)
 	List<Film> getTenRandomValues();
 	
+	@Query(value="SELECT f.id,f.created_at,f.description,f.image,f.length,"
+			+"f.name,f.release_date,f.updated_at"
+			+ " FROM films AS f"
+			+ " JOIN ("
+			+ " SELECT r.film_id, AVG(r.value) AS average_rating"
+			+ " FROM user_film_raitings r"
+			+ " GROUP BY r.film_id"
+			+ " ORDER BY average_rating DESC"
+			+ "  LIMIT 10"
+			+ ") AS top_rated ON f.id = top_rated.film_id;",
+			nativeQuery = true)
+	List<Film> findTop10ByAverageRating();
+	
 	Page<Film> findAll(Pageable pageable);
 	Page<Film> findByNameContainingIgnoreCase(String filter,Pageable pageable);
+	Page<Film> findFilmsByUsersId(Long userID,Pageable pageable);
 	
 	List<Film> findFilmsByActorsId(Long actorId);
 	List<Film> findFilmsByCountriesId(Long countryId);

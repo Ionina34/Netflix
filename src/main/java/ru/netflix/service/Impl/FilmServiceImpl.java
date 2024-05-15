@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import jakarta.persistence.TypedQuery;
 import ru.netflix.model.Film;
 import ru.netflix.repository.FilmRepository;
 import ru.netflix.service.interfaces.FilmService;
@@ -23,6 +24,11 @@ public class FilmServiceImpl implements FilmService {
 	@Override
 	public Page<Film> findAllFilms(Pageable pageable) {
 		return repository.findAll(pageable);
+	}
+	
+	@Override
+	public Page<Film> findFilmsByUsersId(Long userId,Pageable pageable){
+		return repository.findFilmsByUsersId(userId, pageable);
 	}
 
 	@Override
@@ -40,6 +46,11 @@ public class FilmServiceImpl implements FilmService {
 	public List<Film> findRandomFilms() {
 		return repository.getTenRandomValues();
 	}
+	
+	@Override
+	public List<Film> getTop10FilmsByAverageRating(){
+	    return repository.findTop10ByAverageRating();
+	}
 
 	@Override
 	public Film getFilmById(Long id) {
@@ -54,6 +65,11 @@ public class FilmServiceImpl implements FilmService {
 	@Override
 	public List<Film> getFilmsByActorId(Long actorId) {
 		return repository.findFilmsByActorsId(actorId);
+	}
+	
+	@Override
+	public List<Film> getFilmsByUsersId(Long userId){
+		return repository.findFilmsByUsersId(userId);
 	}
 
 	@Override

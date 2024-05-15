@@ -149,7 +149,6 @@ hr {
 }
 
 .heart{
-	background-color: #B5B5B5;
 	height: 20px;
 	width: 20px;
 	position: relative;
@@ -164,7 +163,7 @@ hr {
 	height: 20px;
 	width: 20px;
 	border-radius: 50%;
-	background-color: #B5B5B5;
+	background-color: inherit;
 	position: absolute;
 }
 

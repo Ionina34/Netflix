@@ -1,5 +1,4 @@
-
-$(document).ready(function() {
+function ready() {
 	let totalPages = 1;
 
 	function fetch_films(startPage) {
@@ -93,25 +92,31 @@ $(document).ready(function() {
 
 	function viewFilms(response) {
 		$('#films').empty();
-		console.log("S")
 		$.each(response.content, function(i, film) {
+			let isChecked = films.some(function(f) {
+				return JSON.stringify(f) === JSON.stringify(film)
+			})
 			let noteRow = '<div>' +
 				'<div class="card m-1 bg-dark rounded d-flex" style="width: 18rem">' +
-				'<div class="heart ms-auto" onclick="addAMovieToFavorites('+film.id+')"></div>'+
+				'<div id="heart_'+film.id+'" class="heart ms-auto" style="background-color:'+getColor(isChecked)+'" onclick="addAMovieToFavorites(' + film.id + ')"></div>' +
 				'<div class="card-body">' +
-				'<a href="/films/'+film.id+'">'+
+				'<a href="/films/' + film.id + '">' +
 				'<img style="height: 400px" src="../images/' + film.image + '"' +
 				'class="card-img-top" alt="..."></a>' +
-				'<a href="/films/'+film.id+'"><h4 class="card-title">' + film.name + '</h4></a>' +
+				'<a href="/films/' + film.id + '"><h4 class="card-title">' + film.name + '</h4></a>' +
 				'<h5 class="fs-6">' + moment(film.release_date).format('DD-MM-YYYY') + '</h5>' +
 				'<div  style="height: 150px"' +
 				'class="overflow-auto">' + film.des + '</div>' +
 				'</div></div></div>';
 			$('#films').append(noteRow);
-	
+
 		});
 		$('ul.pagination').empty();
 		buildPagination(response);
+	}
+
+	function getColor(isChecked) {
+		return isChecked ? 'rgb(185, 3, 3)' : '#B5B5B5';
 	}
 
 	$(document).on("click", "ul.pagination li a", function() {
@@ -177,11 +182,11 @@ $(document).ready(function() {
 	});
 
 
-	var loading=true;
+	var loading = true;
 	if (localStorage.getItem('filter') !== null) {
 		$("#search-control").val(localStorage.getItem('filter'));
 		search_films(localStorage.getItem('filter'), 0);
-		loading=false;
+		loading = false;
 		localStorage.removeItem("filter");
 	}
 
@@ -190,12 +195,12 @@ $(document).ready(function() {
 			// get first-page at initial time
 			fetch_films(0);
 		})();
-		
+
 
 	$("#search-form").submit(function(event) {
 		event.preventDefault();
 		search_films($("#search-control").val(), 0);
 	});
-	
-});
+
+};
 
