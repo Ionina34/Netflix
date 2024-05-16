@@ -10,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import jakarta.persistence.TypedQuery;
 import ru.netflix.model.Film;
 import ru.netflix.repository.FilmRepository;
 import ru.netflix.service.interfaces.FilmService;
@@ -20,6 +19,11 @@ public class FilmServiceImpl implements FilmService {
 
 	@Autowired
 	private FilmRepository repository;
+	
+	@Override
+	public List<Film> findAllFilms() {
+		return repository.findAll();
+	}
 
 	@Override
 	public Page<Film> findAllFilms(Pageable pageable) {
@@ -30,11 +34,17 @@ public class FilmServiceImpl implements FilmService {
 	public Page<Film> findFilmsByUsersId(Long userId,Pageable pageable){
 		return repository.findFilmsByUsersId(userId, pageable);
 	}
-
+	
 	@Override
-	public List<Film> findAllFilms() {
-		return repository.findAll();
+	public Page<Film> findFilmsByGenresId(Long genreId,Pageable pageable) {
+		return repository.findFilmsByGenresId(genreId,pageable);
 	}
+	
+	@Override
+	public Page<Film> findFilmsByCountryId(Long countryId,Pageable pageable) {
+		return repository.findFilmsByCountriesId(countryId,pageable);
+	}
+
 
 	@Override
 	public Page<Film> findByFilterContainingIgnoreCase(String filter, Pageable pageable) {
@@ -56,7 +66,7 @@ public class FilmServiceImpl implements FilmService {
 	public Film getFilmById(Long id) {
 		return repository.findById(id).orElse(null);
 	}
-
+	
 	@Override
 	public List<Film> getFilmsByGenreId(Long genreId) {
 		return repository.findFilmsByGenresId(genreId);

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ru.netflix.controller.entities.RequestBodyTheFilmIsForEvaluation;
@@ -32,19 +33,23 @@ public class FavouriteFilmRestController {
 	@Autowired
 	private FilmService filmService;
 	
-	@Autowired
-	private RatingService ratingService;
-
 	/* Получет список всех избранных фильмов пользователя для дальнейшей проверки */
 	@GetMapping("/user/films")
 	public List<Film> findFilmByUserId(Principal principal) {
 		return filmService.getFilmsByUsersId(userService.findByEmail(principal.getName()).get().getId());
 	}
 
-	//Получает избранные фильмы пользователя по- странично
+	//Получает избранные фильмы пользователя по-странично
 	@GetMapping("/user/films/fav")
 	public Page<Film> getAllFilms(Pageable pageable, Principal principal) {
 		return filmService.findFilmsByUsersId(userService.findByEmail(principal.getName()).get().getId(), pageable);
+	}
+	
+	//Для проверки есть фильм в избранном
+	@GetMapping("/user/film/fav")
+	public boolean searchForAMovieInFav(@RequestParam(name="filmId") Long filmId,Principal principal) {
+		return filmService.getFavFilmByUserIdAndFilmId(userService.findByEmail
+				(principal.getName()).get().getId(), filmId).size() > 0;
 	}
 
 	/*
@@ -81,17 +86,5 @@ public class FavouriteFilmRestController {
 
 		return new ResponseEntity<Film>(film, HttpStatus.OK);
 
-	}
-
-	//Метод для выставления оценки фильма пользователем
-	@PostMapping("/user/film/rating/add")
-	public ResponseEntity<Film> addRating(@RequestBody RequestBodyTheFilmIsForEvaluation info,Principal principal){
-		Rating rating=new Rating();
-		rating.setUser(userService.findByEmail(principal.getName()).get());
-		rating.setFilm(info.getFilm());
-		rating.setValue(info.getRating());
-		ratingService.save(rating);
-		
-		return new ResponseEntity<Film>(info.getFilm(),HttpStatus.OK);
 	}
 }

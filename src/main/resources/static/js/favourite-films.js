@@ -1,25 +1,23 @@
-var films=[];
+var films = [];
 
-$(document).ready(function(){
+$(document).ready(function() {
 	$.ajax({
-		type:"GET",
-		url:"http://localhost:8000/user/films",
-		success:function(response){
-			films=response
+		type: "GET",
+		url: "http://localhost:8000/user/films",
+		success: function(response) {
+			films = response
 			ready()
 		},
 		error: function(e) {
-			alert("ERROR: ", e);
-			console.log("ERROR: ", e);
+			alert("ERROR: ", e.status);
 		}
 	})
 })
 
 function addAMovieToFavorites(filmId) {
-	var getFilm={};
-	getFilm["filmId"]=filmId;
-	console.log(filmId);
-	
+	var getFilm = {};
+	getFilm["filmId"] = filmId;
+
 	$.ajax({
 		type: "POST",
 		url: "http://localhost:8000/user/films/add",
@@ -27,18 +25,23 @@ function addAMovieToFavorites(filmId) {
 		data: JSON.stringify(getFilm),
 		dataType: 'json',
 		cache: false,
+		xhrFields: {
+			withCredentials: true
+		},
 		success: function(response) {
-			var bg=$('#heart_'+filmId).css('background-color');
-			$('#heart_'+filmId).css('background-color',setBackground(bg))
+			var bg = $('#heart_' + filmId).css('background-color');
+			$('#heart_' + filmId).css('background-color', setBackground(bg))
 		},
 		error: function(e) {
-			alert("ERROR: ", e);
-			console.log("ERROR: ", e);
+			if (e.status == 302) {
+				// Обработка ошибки 302
+				alert("Redirected: ", e.status);
+			}
 		}
 	});
 }
 
-function setBackground(bg){
-	if(bg=='rgb(185, 3, 3)') return '#B5B5B5'
+function setBackground(bg) {
+	if (bg == 'rgb(185, 3, 3)') return '#B5B5B5'
 	else return 'rgb(185, 3, 3)'
 }

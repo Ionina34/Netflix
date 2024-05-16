@@ -11,8 +11,8 @@
 		<hr>
 		<div class="top">
 			<div class="left">
-				<img class="imageFilm"
-					th:src="'../images/'+${human.photo}" alt="${human.name}">
+				<img class="imageFilm" th:src="'../images/'+${human.photo}"
+					alt="${human.name}">
 			</div>
 			<div class="right">
 				<table>
@@ -20,51 +20,65 @@
 						<td class="nameFilm" colspan="2"><p th:text="${human.name}"></p></td>
 					</tr>
 					<tr>
-						<td class="td" colspan="2"><p th:text="'Дата рождения: '+${#temporals.format(human.birthday,'dd-MM-yyyy')}"></p></td>
+						<td class="td" colspan="2"><p
+								th:text="'Дата рождения: '+${#temporals.format(human.birthday,'dd-MM-yyyy')}"></p></td>
 					</tr>
 					<tr>
-						<td class="td" colspan="2"><p class="biografy" th:text="${human.brief_biography}"></p></td>
+						<td class="td" colspan="2"><p class="biografy"
+								th:text="${human.brief_biography}"></p></td>
 					</tr>
 				</table>
 			</div>
 		</div>
 		<hr>
-			<div>
-				<div id="wrapper">
-					<div id="carousel">
-						<div id="content">
-							<div th:each="film:${films}">
-								<div class="card">
-										<a id="more-info"
-										th:href="@{/films/{id}(id=${film.id})}">
-										 <img
-										th:src="'../'+${film.image}" th:alt="${film.name}"
-										class="item"></a>
-									<a th:href="@{/films/{id}(id=${film.id})}"
-										th:text="${film.name}"></a> 
-								</div>
+		<div>
+			<div id="wrapper">
+				<div id="carousel">
+					<div id="content">
+						<div th:each="film:${films}">
+							<div class="card">
+								<a id="more-info" th:href="@{/films/{id}(id=${film.id})}"> <img
+									th:src="'../'+${film.image}" th:alt="${film.name}" class="item"></a>
+								<a th:href="@{/films/{id}(id=${film.id})}"
+									th:text="${film.name}"></a>
 							</div>
 						</div>
 					</div>
-					<button id="prev">
-						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-							viewBox="0 0 24 24">
-                        <path fill="none" d="M0 0h24v24H0V0z" />
-                        <path
-								d="M15.61 7.41L14.2 6l-6 6 6 6 1.41-1.41L11.03 12l4.58-4.59z" />
-                    </svg>
-					</button>
-					<button id="next">
-						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-							viewBox="0 0 24 24">
-                        <path fill="none" d="M0 0h24v24H0V0z" />
-                        <path
-								d="M10.02 6L8.61 7.41 13.19 12l-4.58 4.59L10.02 18l6-6-6-6z" />
-                    </svg>
-					</button>
 				</div>
-				<hr>
+				<button id="prev">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+						viewBox="0 0 24 24">
+                        <path fill="none" d="M0 0h24v24H0V0z" />
+                        <path
+							d="M15.61 7.41L14.2 6l-6 6 6 6 1.41-1.41L11.03 12l4.58-4.59z" />
+                    </svg>
+				</button>
+				<button id="next">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+						viewBox="0 0 24 24">
+                        <path fill="none" d="M0 0h24v24H0V0z" />
+                        <path
+							d="M10.02 6L8.61 7.41 13.19 12l-4.58 4.59L10.02 18l6-6-6-6z" />
+                    </svg>
+				</button>
 			</div>
+			<hr>
+		</div>
 	</div>
 </body>
+
+<th:block layout:fragment="script">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.min.js"
+		crossorigin="anonymous"></script>
+	<script type="text/JavaScript"
+		src="https://MomentJS.com/downloads/moment-with-locales.js">
+			</script>
+	<script src="/js/search.js"></script>
+</th:block>
 </html>

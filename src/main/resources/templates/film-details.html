@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout}">
+	layout:decorate="~{layout}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -12,10 +13,13 @@
 			<hr>
 			<div class="top">
 				<div class="left">
-					<img class="imageFilm" th:src="'../images/'+${ModelFilm.film.image}"
-						alt="">
+					<img class="imageFilm"
+						th:src="'../images/'+${ModelFilm.film.image}" alt="">
 				</div>
-				<div class="right">
+				<div id="right" class="right">
+					<div sec:authorize="isAuthenticated()" id="heart" th:value="${ModelFilm.film.id}" class="heart ms-auto"
+						style="background-color: #B5B5B5"
+						th:onclick="'addAMovieToFavorites('+${ModelFilm.film.id}+')'"></div>
 					<table>
 						<tr>
 							<td class="nameFilm" colspan="2"><h1
@@ -25,8 +29,8 @@
 							<td>Жанр:</td>
 							<td class="property director">
 								<div class="a">
-									<p>
-										<a href="" th:each="genre,state: ${ModelFilm.genres}"
+									<p id="linkWithGenres">
+										<a href="#" th:each="genre,state: ${ModelFilm.genres}"
 											th:text="${state.count==ModelFilm.genres.size}? ${genre.name} :${genre.name} +', '">
 										</a>
 									</p>
@@ -46,8 +50,8 @@
 							<td>Страна:</td>
 							<td class="property">
 								<div class="a">
-									<p>
-										<a href="" th:each="country,state: ${ModelFilm.countries}"
+									<p id="linkWithCountry">
+										<a href="#" th:each="country,state: ${ModelFilm.countries}"
 											th:text="${state.count==ModelFilm.countries.size}? ${country.name} :${country.name} +', '">
 										</a>
 									</p>
@@ -95,12 +99,11 @@
 						<div id="content">
 							<div th:each="actor:${ModelFilm.actors}">
 								<div class="card">
-										<a id="more-info"
-										th:href="@{/actor/{id}(id=${actor.id})}">
-										 <img class="photoActor"
-										th:src="'../images/'+${actor.photo}" th:alt="${actor.name}"></a>
-									<a th:href="@{/actor/{id}(id=${actor.id})}"
-									 th:text="${actor.name}"></a> 
+									<a id="more-info" th:href="@{/actor/{id}(id=${actor.id})}">
+										<img class="photoActor" th:src="'../images/'+${actor.photo}"
+										th:alt="${actor.name}">
+									</a> <a th:href="@{/actor/{id}(id=${actor.id})}"
+										th:text="${actor.name}"></a>
 								</div>
 							</div>
 						</div>
@@ -128,7 +131,21 @@
 	</div>
 
 	<th:block layout:fragment="script">
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+			crossorigin="anonymous"></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"
+			crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.min.js"
+			crossorigin="anonymous"></script>
+		<script type="text/JavaScript"
+			src="https://MomentJS.com/downloads/moment-with-locales.js">
+			</script>
 		<script src="/js/caruselActor.js"></script>
+		<script src="/js/search.js"></script>
+		<script src="/js/transition-to-a-genre_and_country.js"></script>
+		<script src="/js/film-details.js"></script>
 	</th:block>
 </body>
 </html>

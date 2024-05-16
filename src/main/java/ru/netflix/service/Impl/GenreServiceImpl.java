@@ -25,4 +25,9 @@ public class GenreServiceImpl implements GenreService{
 		return genreRepository.findGenresByFilmsId(filmId);
 	}
 
+	@Override
+	public Genre findByName(String name) {
+		return genreRepository.findByName(name);
+	}
+
 }

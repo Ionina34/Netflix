@@ -18,4 +18,9 @@ public class CountryServiceImpl implements CountryService {
 	public List<Country> findCountriesByFilmsId(Long filmId){
 		return countryRepository.findCountriesByFilmsId(filmId);
 	}
+
+	@Override
+	public Country findByName(String country) {
+		return countryRepository.findByName(country);
+	}
 }

@@ -7,9 +7,11 @@ import org.springframework.data.domain.*;
 import ru.netflix.model.Film;
 
 public interface FilmService {
+	List<Film> findAllFilms();
 	Page<Film> findAllFilms(Pageable pageable);
 	Page<Film> findFilmsByUsersId(Long userId,Pageable pageable);
-	List<Film> findAllFilms();
+	Page<Film> findFilmsByGenresId(Long genreId,Pageable pageable);
+	Page<Film> findFilmsByCountryId(Long countryId,Pageable pageable);
 	Page<Film> findByFilterContainingIgnoreCase(String filter,Pageable pageable);
 	
 	List<Film> findRandomFilms();

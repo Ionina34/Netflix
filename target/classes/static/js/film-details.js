@@ -1,19 +1,23 @@
-var films = [];
+if ($("#heart").length) {
+	let filmId = $("#heart").attr('value');
 
-$(document).ready(function() {
 	$.ajax({
 		type: "GET",
-		url: "http://localhost:8000/user/films",
+		url: "http://localhost:8000/user/film/fav",
+		data: {
+			filmId: filmId
+		},
 		success: function(response) {
-			films = response
-			ready()
+			if (response)
+				$("#heart").css('background-color', 'rgb(185, 3, 3)')
 		},
 		error: function(e) {
 			alert("ERROR: ", e.status);
 		}
 	})
-})
+}
 
+//Такая функция существует в файле favourite-films.js, здесь поменялся только функция success
 function addAMovieToFavorites(filmId) {
 	var getFilm = {};
 	getFilm["filmId"] = filmId;
@@ -29,14 +33,11 @@ function addAMovieToFavorites(filmId) {
 			withCredentials: true
 		},
 		success: function(response) {
-			var bg = $('#heart_' + filmId).css('background-color');
-			$('#heart_' + filmId).css('background-color', setBackground(bg))
+			var bg = $('#heart').css('background-color');
+			$('#heart').css('background-color', setBackground(bg))
 		},
 		error: function(e) {
-			if (e.status == 302) {
-				// Обработка ошибки 302
 				alert("Redirected: ", e.status);
-			}
 		}
 	});
 }

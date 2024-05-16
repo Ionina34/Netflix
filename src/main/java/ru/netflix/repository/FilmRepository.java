@@ -37,6 +37,8 @@ public interface FilmRepository extends JpaRepository<Film, Long> {
 	Page<Film> findAll(Pageable pageable);
 	Page<Film> findByNameContainingIgnoreCase(String filter,Pageable pageable);
 	Page<Film> findFilmsByUsersId(Long userID,Pageable pageable);
+	Page<Film> findFilmsByGenresId(Long genreId,Pageable pageable);
+	Page<Film> findFilmsByCountriesId(Long countryId,Pageable pageable);
 	
 	List<Film> findFilmsByActorsId(Long actorId);
 	List<Film> findFilmsByCountriesId(Long countryId);

@@ -10,4 +10,6 @@ import ru.netflix.model.Country;
 @Repository
 public interface CountryRepository extends JpaRepository<Country, Long> {
 	List<Country> findCountriesByFilmsId(Long countryId);
+	
+	Country findByName(String country);
 }

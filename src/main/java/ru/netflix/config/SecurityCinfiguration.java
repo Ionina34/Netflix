@@ -27,6 +27,8 @@ public class SecurityCinfiguration {
 				.authorizeHttpRequests(auth -> auth.requestMatchers("films").permitAll()
 						.requestMatchers("registration").anonymous()
 						.requestMatchers("/films/{id}").permitAll()
+						.requestMatchers("/films/search").permitAll()
+						.requestMatchers("/films/search/**").permitAll()
 						.anyRequest().authenticated())
 				.formLogin(form -> form
 						.loginPage("/login")

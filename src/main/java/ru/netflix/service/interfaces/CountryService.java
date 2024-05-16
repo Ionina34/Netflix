@@ -6,4 +6,6 @@ import ru.netflix.model.Country;
 
 public interface CountryService {
 	List<Country> findCountriesByFilmsId(Long filmId);
+	
+	Country findByName(String country);
 }
