@@ -1,16 +1,16 @@
-function removeFavFilm(filmId) {
-	var getFilm = {};
-	getFilm["filmId"] = filmId;
+function removeFavFilm(film_p) {
+	var film = {};
+	film["film"] = film_p;
 
 	$.ajax({
 		type: "POST",
 		url: "http://localhost:8000/user/films/remove",
-		data: JSON.stringify(getFilm),
+		data:JSON.stringify(film),
 		contentType: "application/json",
 		dataType: 'json',
 		cache: false,
 		success: function(responce) {
-			$("#film_" + filmId).empty();
+			$("#film_" +film_p.id).empty();
 
 		},
 		error: function(e) {
@@ -141,7 +141,7 @@ $(document).ready(function() {
 
 			let noteRow = '<div id="film_' + film.id + '" class="film">' +
 				'<div class="card m-1 bg-dark rounded d-flex" style="width: 18rem;height:600px">' +
-				'<div id="heart_' + film.id + '" class="heart ms-auto" style="background-color:rgb(185, 3, 3)" onclick="removeFavFilm(' + film.id + ')"></div>' +
+				'<div id="heart_' + film.id + '" class="heart ms-auto" style="background-color:rgb(185, 3, 3)" onclick="removeFavFilm(' + JSON.stringify(film).replace(/"/g, "'") + ')"></div>' +
 				'<div class="card-body">' +
 				'<a href="/films/' + film.id + '">' +
 				'<img style="height: 400px" src="../images/' + film.image + '"' +

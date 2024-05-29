@@ -1,4 +1,4 @@
-package ru.netflix.controller.entities;
+package ru.netflix.controller.entities.entity.responce;
 
 import java.util.List;
 

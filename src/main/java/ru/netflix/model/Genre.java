@@ -6,10 +6,12 @@ import java.util.Set;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @Table(name = "genres")
+@NoArgsConstructor
 public class Genre {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

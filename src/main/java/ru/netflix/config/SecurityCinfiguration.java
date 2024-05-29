@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import ru.netflix.service.Impl.CustomLoginSuccessHandler;
 import ru.netflix.service.Impl.MyUserDetailsService;
 
 @Configuration
@@ -29,10 +30,14 @@ public class SecurityCinfiguration {
 						.requestMatchers("/films/{id}").permitAll()
 						.requestMatchers("/films/search").permitAll()
 						.requestMatchers("/films/search/**").permitAll()
-						.anyRequest().authenticated())
+						.requestMatchers("/films/all/get").permitAll()
+						.requestMatchers("/films/sort").permitAll()
+						.requestMatchers("/admin/**").hasRole("ADMIN")
+						.requestMatchers("/admin/films/update").hasRole("ADMIN")
+						.anyRequest().hasRole("USER"))
 				.formLogin(form -> form
 						.loginPage("/login")
-						.defaultSuccessUrl("/films", true)
+						.successHandler(new CustomLoginSuccessHandler())
 						.permitAll()
 					)
 				.build();
@@ -40,7 +45,7 @@ public class SecurityCinfiguration {
 
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
-		return (web) -> web.ignoring().requestMatchers("/images/**", "/js/**", "/css/**", "/webjars/**", "/logo/**");
+		return (web) -> web.ignoring().requestMatchers("/images/**", "/js/**","/js/admin/**", "/css/**", "/webjars/**", "/logo/**");
 	}
 
 	@Bean

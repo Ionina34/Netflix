@@ -4,13 +4,12 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import lombok.RequiredArgsConstructor;
-import ru.netflix.controller.entities.*;
+import ru.netflix.controller.entities.entity.responce.FilmViewModel;
 import ru.netflix.model.Film;
 import ru.netflix.model.Genre;
 import ru.netflix.service.interfaces.*;
@@ -30,7 +29,6 @@ public class FilmController {
 	public String mainHtml(Model model) {
 		//List<Film> films= filmService.findRandomFilms();
 		List<Film> films= filmService.getTop10FilmsByAverageRating();
-		System.out.println(films);
 		ArrayList<Genre> genres=new ArrayList<>(genreService.getRandomGenres());
 		
 		List<Film> genreOne=filmService.getFilmsByGenreId(genres.get(0).getId());
@@ -49,6 +47,8 @@ public class FilmController {
 	@GetMapping("/all")
 	public String findAllFilm(Model model){
 		model.addAttribute("activePage","films");
+		model.addAttribute("genres", genreService.getAll());
+		model.addAttribute("countries", countryService.getAll());
 		return "films";
 	}
 

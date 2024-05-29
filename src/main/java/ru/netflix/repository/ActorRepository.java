@@ -11,4 +11,6 @@ import ru.netflix.model.Actor;
 public interface ActorRepository extends JpaRepository<Actor, Long>
 {
 	List<Actor> findActorsByFilmsId(Long filmId);
+	
+	Actor findByName(String name);
 }

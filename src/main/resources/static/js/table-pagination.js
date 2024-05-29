@@ -1,10 +1,120 @@
-function ready() {
-	console.log("ss")
-	let totalPages = 1;
+let totalPages = 1;
+let page_films = false;
+let page_genre = false;
+let page_country = false;
+let page_sort = false;
 
-	let page_films = false;
-	let page_genre = false;
-	let page_country = false;
+function search_films_by_parameters_sort(data_value, alphabet_value, selectedGenre, selectedCountry, startPage) {
+	$.ajax({
+		type: "GET",
+		url: "http://localhost:8000/films/sort",
+		data: {
+			data: data_value,
+			alphabet: alphabet_value,
+			genre: selectedGenre,
+			country: selectedCountry,
+			page: startPage,
+			size: 12
+		},
+		success: function(response) {
+			console.log(response)
+			page_sort = true;
+			viewFilms(response);
+		},
+		error: function(e) {
+			alert("Error: ", e.status);
+		}
+	});
+}
+
+function viewFilms(response) {
+	$('#films').empty();
+	$.each(response.content, function(i, film) {
+		let isChecked = false;
+		if (films[0] != '<') {
+			isChecked = films.some(function(f) {
+				return JSON.stringify(f) === JSON.stringify(film)
+			})
+		}
+		let noteRow = '<div>' +
+			'<div class="card m-1 bg-dark rounded d-flex" style="width: 18rem">' +
+			'<div id="heart_' + film.id + '" class="heart ms-auto" style="background-color:' + getColor(isChecked) + '" onclick="addAMovieToFavorites(' + JSON.stringify(film).replace(/"/g, "'") + ')"></div>' +
+			'<div class="card-body">' +
+			'<a href="/films/' + film.id + '">' +
+			'<img style="height: 400px" src="../images/' + film.image + '"' +
+			'class="card-img-top" alt="..."></a>' +
+			'<a href="/films/' + film.id + '"><h4 class="card-title">' + film.name + '</h4></a>' +
+			'<h5 class="fs-6">' + moment(film.release_date).format('DD-MM-YYYY') + '</h5>' +
+			'<div  style="height: 150px"' +
+			'class="overflow-auto">' + film.des + '</div>' +
+			'</div></div></div>';
+		$('#films').append(noteRow);
+
+	});
+	$('ul.pagination').empty();
+	buildPagination(response);
+}
+
+
+
+function getColor(isChecked) {
+	return isChecked ? 'rgb(185, 3, 3)' : '#B5B5B5';
+}
+
+function buildPagination(response) {
+	totalPages = response.totalPages;
+
+	var pageNumber = response.pageable.pageNumber;
+
+	var numLinks = 5;
+
+	// print 'previous' link only if not on page one
+	var first = '';
+	var prev = '';
+	if (pageNumber > 0) {
+		if (pageNumber !== 0) {
+			first = '<li class="page-item"><a class="page-link">« First</a></li>';
+		}
+		prev = '<li class="page-item"><a class="page-link">‹ Prev</a></li>';
+	} else {
+		prev = ''; // on the page one, don't show 'previous' link
+		first = ''; // nor 'first page' link
+	}
+
+	// print 'next' link only if not on the last page
+	var next = '';
+	var last = '';
+	if (pageNumber < totalPages) {
+		if (pageNumber !== totalPages - 1) {
+			next = '<li class="page-item"><a class="page-link">Next ›</a></li>';
+			last = '<li class="page-item"><a class="page-link">Last »</a></li>';
+		}
+	} else {
+		next = ''; // on the last page, don't show 'next' link
+		last = ''; // nor 'last page' link
+	}
+
+	var start = pageNumber - (pageNumber % numLinks) + 1;
+	var end = start + numLinks - 1;
+	end = Math.min(totalPages, end);
+	var pagingLink = '';
+
+	for (var i = start; i <= end; i++) {
+		if (i == pageNumber + 1) {
+			pagingLink += '<li class="page-item active"><a class="page-link"> ' + i + ' </a></li>'; // no need to create a link to current page
+		} else {
+			pagingLink += '<li class="page-item"><a class="page-link"> ' + i + ' </a></li>';
+		}
+	}
+
+	// return the page navigation link
+	pagingLink = first + prev + pagingLink + next + last;
+
+	$("ul.pagination").append(pagingLink);
+}
+
+
+function ready() {
 
 	function fetch_films(startPage) {
 		$.ajax({
@@ -14,11 +124,14 @@ function ready() {
 				page: startPage,
 				size: 12
 			},
+			xhrFields: {
+				withCredentials: true
+			},
 			success: function(response) {
 				viewFilms(response);
 			},
 			error: function(e) {
-				alert("ERROR: ", e.status);
+				$(location).attr('href', "http://localhost:8000/login")
 			}
 		});
 	}
@@ -80,95 +193,15 @@ function ready() {
 		})
 	}
 
-	function buildPagination(response) {
-		totalPages = response.totalPages;
-
-		var pageNumber = response.pageable.pageNumber;
-
-		var numLinks = 5;
-
-		// print 'previous' link only if not on page one
-		var first = '';
-		var prev = '';
-		if (pageNumber > 0) {
-			if (pageNumber !== 0) {
-				first = '<li class="page-item"><a class="page-link">« First</a></li>';
-			}
-			prev = '<li class="page-item"><a class="page-link">‹ Prev</a></li>';
-		} else {
-			prev = ''; // on the page one, don't show 'previous' link
-			first = ''; // nor 'first page' link
-		}
-
-		// print 'next' link only if not on the last page
-		var next = '';
-		var last = '';
-		if (pageNumber < totalPages) {
-			if (pageNumber !== totalPages - 1) {
-				next = '<li class="page-item"><a class="page-link">Next ›</a></li>';
-				last = '<li class="page-item"><a class="page-link">Last »</a></li>';
-			}
-		} else {
-			next = ''; // on the last page, don't show 'next' link
-			last = ''; // nor 'last page' link
-		}
-
-		var start = pageNumber - (pageNumber % numLinks) + 1;
-		var end = start + numLinks - 1;
-		end = Math.min(totalPages, end);
-		var pagingLink = '';
-
-		for (var i = start; i <= end; i++) {
-			if (i == pageNumber + 1) {
-				pagingLink += '<li class="page-item active"><a class="page-link"> ' + i + ' </a></li>'; // no need to create a link to current page
-			} else {
-				pagingLink += '<li class="page-item"><a class="page-link"> ' + i + ' </a></li>';
-			}
-		}
-
-		// return the page navigation link
-		pagingLink = first + prev + pagingLink + next + last;
-
-		$("ul.pagination").append(pagingLink);
-	}
-
-	function viewFilms(response) {
-		$('#films').empty();
-		$.each(response.content, function(i, film) {
-			let isChecked = false;
-			if (films[0] != '<') {
-				isChecked = films.some(function(f) {
-					return JSON.stringify(f) === JSON.stringify(film)
-				})
-			}
-			let noteRow = '<div>' +
-				'<div class="card m-1 bg-dark rounded d-flex" style="width: 18rem">' +
-				'<div id="heart_' + film.id + '" class="heart ms-auto" style="background-color:' + getColor(isChecked) + '" onclick="addAMovieToFavorites(' + film.id + ')"></div>' +
-				'<div class="card-body">' +
-				'<a href="/films/' + film.id + '">' +
-				'<img style="height: 400px" src="../images/' + film.image + '"' +
-				'class="card-img-top" alt="..."></a>' +
-				'<a href="/films/' + film.id + '"><h4 class="card-title">' + film.name + '</h4></a>' +
-				'<h5 class="fs-6">' + moment(film.release_date).format('DD-MM-YYYY') + '</h5>' +
-				'<div  style="height: 150px"' +
-				'class="overflow-auto">' + film.des + '</div>' +
-				'</div></div></div>';
-			$('#films').append(noteRow);
-
-		});
-		$('ul.pagination').empty();
-		buildPagination(response);
-	}
-
-	function getColor(isChecked) {
-		return isChecked ? 'rgb(185, 3, 3)' : '#B5B5B5';
-	}
 
 	$(document).on("click", "ul.pagination li a", function() {
 		var data = $(this).attr('data');
 		var filter = $("#search-control").val()
 		let val = $(this).text();
-		console.log('val: ' + val);
+		let data_value = localStorage.getItem('data_value')
+		let alphabet_value = localStorage.getItem('alphabet_value')
+		let selectedGenre = localStorage.getItem('selectedGenre')
+		let selectedCountry = localStorage.getItem('selectedCountry')
 
 		// click on the NEXT tag
 		if (val.toUpperCase() === "« FIRST") {
@@ -179,18 +212,23 @@ function ready() {
 				search_films_by_genre(filter, 0)
 			else if (page_country)
 				search_films_by_country(filter, 0)
+			else if (page_sort)
+				search_films_by_parameters_sort(data_value, alphabet_value, selectedGenre, selectedCountry, 0)
 			else
 				fetch_films(0);
 			$("li.active").removeClass("active");
 			// add .active to next-pagination li
 			currentActive.next().addClass("active");
 		} else if (val.toUpperCase() === "LAST »") {
+			let currentActive = $("li.active");
 			if (page_films)
 				search_films(filter, totalPages - 1)
 			else if (page_genre)
 				search_films_by_genre(filter, totalPages - 1)
 			else if (page_country)
 				search_films_by_country(filter, totalPages - 1)
+			else if (page_sort)
+				search_films_by_parameters_sort(data_value, alphabet_value, selectedGenre, selectedCountry, totalPages - 1)
 			else
 				fetch_films(totalPages - 1);
 			$("li.active").removeClass("active");
@@ -207,6 +245,8 @@ function ready() {
 					search_films_by_genre(filter, startPage)
 				else if (page_country)
 					search_films_by_country(filter, startPage)
+				else if (page_sort)
+					search_films_by_parameters_sort(data_value, alphabet_value, selectedGenre, selectedCountry, startPage)
 				else
 					fetch_films(startPage);
 				// remove .active class for the old li tag
@@ -225,6 +265,8 @@ function ready() {
 					search_films_by_genre(filter, startPage)
 				else if (page_country)
 					search_films_by_country(filter, startPage)
+				else if (page_sort)
+					search_films_by_parameters_sort(data_value, alphabet_value, selectedGenre, selectedCountry, startPage)
 				else
 					fetch_films(startPage);
 				let currentActive = $("li.active");
@@ -240,6 +282,8 @@ function ready() {
 				search_films_by_genre(filter, startPage)
 			else if (page_country)
 				search_films_by_country(filter, startPage)
+			else if (page_sort)
+				search_films_by_parameters_sort(data_value, alphabet_value, selectedGenre, selectedCountry, startPage)
 			else
 				fetch_films(startPage);
 			// add focus to the li tag
@@ -283,4 +327,3 @@ function ready() {
 	});
 
 };
-

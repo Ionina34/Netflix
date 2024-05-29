@@ -1,4 +1,4 @@
-package ru.netflix.controller;
+package ru.netflix.controller.API;
 
 import java.security.Principal;
 import java.util.List;
@@ -7,23 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import ru.netflix.controller.entities.RequestBodyTheFilmIsForEvaluation;
-import ru.netflix.controller.entities.RequestFilmFav;
+import ru.netflix.controller.entities.entity.request.RequestFilmFav;
 import ru.netflix.model.Film;
-import ru.netflix.model.Rating;
 import ru.netflix.model.User;
 import ru.netflix.service.interfaces.FilmService;
 import ru.netflix.service.interfaces.IUserService;
-import ru.netflix.service.interfaces.RatingService;
 
 @RestController
 public class FavouriteFilmRestController {
@@ -57,16 +52,15 @@ public class FavouriteFilmRestController {
 	 * удаление, если фильм уже есть в этом списке
 	 */
 	@PostMapping("/user/films/add")
-	public ResponseEntity<Film> addFilm(@RequestBody RequestFilmFav getFilm, Principal principal) {
+	public ResponseEntity<Film> addFilm(@RequestBody RequestFilmFav film, Principal principal) {
 		Film favFilm = new Film();
-		Film film = filmService.getFilmById(getFilm.getFilmId());
 		User user = userService.findByEmail(principal.getName()).get();
 
-		if (filmService.getFavFilmByUserIdAndFilmId(user.getId(), film.getId()).size() > 0) {
-			user.removeFilm(film.getId());
+		if (filmService.getFavFilmByUserIdAndFilmId(user.getId(), film.getFilm().getId()).size() > 0) {
+			user.removeFilm(film.getFilm().getId());
 			userService.save(user);
 		} else {
-			user.addFilm(film);
+			user.addFilm(film.getFilm());
 			userService.save(user);
 		}
 		return new ResponseEntity<Film>(favFilm, HttpStatus.OK);
@@ -78,13 +72,12 @@ public class FavouriteFilmRestController {
 	 * прямую без проверок со старницы избранных фильмов
 	 */
 	@PostMapping("/user/films/remove")
-	public ResponseEntity<Film> removeFilm(@RequestBody RequestFilmFav getFilm, Principal principal) {
-		Film film = filmService.getFilmById(getFilm.getFilmId());
+	public ResponseEntity<Film> removeFilm(@RequestBody RequestFilmFav film, Principal principal) {
 		User user= userService.findByEmail(principal.getName()).get();
-		user.removeFilm(film.getId());
+		user.removeFilm(film.getFilm().getId());
 		userService.save(user);
 
-		return new ResponseEntity<Film>(film, HttpStatus.OK);
+		return new ResponseEntity<Film>(film.getFilm(), HttpStatus.OK);
 
 	}
 }

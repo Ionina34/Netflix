@@ -1,4 +1,4 @@
-package ru.netflix.controller.entities;
+package ru.netflix.controller.entities.entity.request;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

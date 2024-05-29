@@ -37,7 +37,7 @@ function addAMovieToFavorites(filmId) {
 			$('#heart').css('background-color', setBackground(bg))
 		},
 		error: function(e) {
-				alert("Redirected: ", e.status);
+				alert("Error: ", e.status);
 		}
 	});
 }

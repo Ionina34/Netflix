@@ -17,29 +17,32 @@
 		<div class="rigth">
 			<nav class="nav-container">
 				<div class="container">
-					<img class="logo" th:src="@{../logo/Logo.png}"> <img
-						class="logo2" th:src="@{../logo/Logo2.png}">
+					<img class="logo" src="http://localhost:8000/logo/Logo.png"> <img
+						class="logo2" src="http://localhost:8000/logo/Logo2.png">
 				</div>
 			</nav>
 			<div class="menu">
 				<ul>
-					<li class="nav-item"><a id="main"
+					<li class="nav-item" sec:authorize="!hasRole('ROLE_ADMIN')"
+					><a id="main"
 						th:class="${activePage=='main'}?'active-link':''"
 						aria-current="page" href="/films">Главная</a></li>
-					<li class="nav-item" sec:authorize="isAuthenticated()"><a id="library"
-						th:class="${activePage=='films'}?'active-link':''"
-						aria-current="page"  href="/films/all">Библиотека</a></li>
-					<li class="nav-item" sec:authorize="isAuthenticated()"><a
-					href="/films/fav"
-						th:class="${activePage=='fav'}?'active-link':''"
+					<li class="nav-item" sec:authorize="!hasRole('ROLE_ADMIN')"><a
+						id="library" th:class="${activePage=='films'}?'active-link':''"
+						aria-current="page" href="/films/all">Библиотека</a></li>
+					<li class="nav-item" sec:authorize="hasRole('ROLE_USER')"><a
+						href="/films/fav" th:class="${activePage=='fav'}?'active-link':''"
 						aria-current="page">Избранное</a></li>
 					<li class="nav-item" sec:authorize="!isAuthenticated()"><a
 						href="/login" th:class="${activePage=='logIn'}?'active-link':''"
 						aria-current="page">Вход</a></li>
+					<li class="nav-item" sec:authorize="isAuthenticated()"><a
+						href="/logout"
+						aria-current="page">Выход</a></li>
 				</ul>
 			</div>
 		</div>
-		<div class="left">
+		<div class="left" sec:authorize="!hasRole('ROLE_ADMIN')">
 			<div class="search-container">
 				<form id="search-form">
 					<div class="d-flex justify-content-center px-5">

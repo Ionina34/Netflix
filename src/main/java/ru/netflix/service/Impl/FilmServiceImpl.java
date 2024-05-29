@@ -108,16 +108,9 @@ public class FilmServiceImpl implements FilmService {
 	public void updateFilm(Long id, Film updateFilm) {
 		Film film = repository.findById(id).orElse(null);
 		if (film != null) {
-			film.setName(updateFilm.getName());
-			film.setDes(updateFilm.getDes());
-			film.setRelease_date(updateFilm.getRelease_date());
-			film.setLength(updateFilm.getLength());
-			if (updateFilm.getImage() != "") {
-				// updateFilm.saveImage(updateFilm.getImage(),updateFilm.getName());
-				// film.setImage("images/"+film.getName()+".jpg");
-			}
+			film.update(updateFilm);
 
-			film.setUpdated_at(null);
+			film.setUpdated_at(LocalDate.now());
 			repository.save(film);
 		}
 	}

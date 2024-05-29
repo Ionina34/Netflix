@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 
 import jakarta.validation.Valid;
-import ru.netflix.controller.entities.UserDto;
+import ru.netflix.controller.entities.entity.request.UserDto;
 import ru.netflix.service.Impl.UserService;
 import ru.netflix.service.exeption.UserAlreadyExistException;
 

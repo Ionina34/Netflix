@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.*;
 
 import ru.netflix.model.Film;
+import ru.netflix.model.Genre;
 
 public interface FilmService {
 	List<Film> findAllFilms();

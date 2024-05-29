@@ -14,29 +14,27 @@ $(document).ready(function() {
 	})
 })
 
-function addAMovieToFavorites(filmId) {
-	var getFilm = {};
-	getFilm["filmId"] = filmId;
+function addAMovieToFavorites(film_p) {
+	var film = {};
+	film["film"] = film_p;
 
 	$.ajax({
 		type: "POST",
 		url: "http://localhost:8000/user/films/add",
 		contentType: "application/json",
-		data: JSON.stringify(getFilm),
+		data:JSON.stringify(film),
 		dataType: 'json',
 		cache: false,
 		xhrFields: {
 			withCredentials: true
 		},
 		success: function(response) {
-			var bg = $('#heart_' + filmId).css('background-color');
-			$('#heart_' + filmId).css('background-color', setBackground(bg))
+			console.log(film_p.id)
+			var bg = $('#heart_' + film_p.id).css('background-color');
+			$('#heart_' + film_p.id).css('background-color', setBackground(bg))
 		},
 		error: function(e) {
-			if (e.status == 302) {
-				// Обработка ошибки 302
-				alert("Redirected: ", e.status);
-			}
+			$(location).attr('href',"http://localhost:8000/login")
 		}
 	});
 }

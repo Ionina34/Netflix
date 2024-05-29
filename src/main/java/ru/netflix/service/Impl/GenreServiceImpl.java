@@ -1,19 +1,26 @@
 package ru.netflix.service.Impl;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ru.netflix.model.Film;
 import ru.netflix.model.Genre;
 import ru.netflix.repository.GenreRepository;
 import ru.netflix.service.interfaces.GenreService;
 
 @Service
-public class GenreServiceImpl implements GenreService{
-	
+public class GenreServiceImpl implements GenreService {
+
 	@Autowired
 	private GenreRepository genreRepository;
+
+	@Override
+	public List<Genre> getAll() {
+		return genreRepository.findAll();
+	}
 
 	@Override
 	public List<Genre> getRandomGenres() {
@@ -28,6 +35,35 @@ public class GenreServiceImpl implements GenreService{
 	@Override
 	public Genre findByName(String name) {
 		return genreRepository.findByName(name);
+	}
+
+	@Override
+	public void updateFilmGenres(List<Genre> genresUpdate, Film film) {
+		List<Genre> genres = findGenresByFilmsId(film.getId());
+
+		// Новые жанры фильма
+		List<Genre> missingInGenres = genresUpdate.stream()
+				.filter(e -> genres.stream().noneMatch(g -> g.getName().equals(e.getName()))).toList();
+		// Больше не жанры для этого фильма
+		List<Genre> missingInGenresUpdate = genres.stream()
+				.filter(e -> genresUpdate.stream().noneMatch(g -> g.getName().equals(e.getName()))).toList();
+
+		for (Genre g : missingInGenres) {
+			Genre genre = genreRepository.findByName(g.getName());
+			if (genre == null) {
+				g.setCreated_at(LocalDate.now());
+				g.setUpdated_at(LocalDate.now());
+				genreRepository.save(g);
+			} else {
+				genre.addFilm(film);
+				genreRepository.save(genre);
+			}
+		}
+
+		for (Genre genre : missingInGenresUpdate) {
+			genre.removeFilm(film.getId());
+			genreRepository.save(genre);
+		}
 	}
 
 }

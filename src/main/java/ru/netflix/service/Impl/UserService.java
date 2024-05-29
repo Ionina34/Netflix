@@ -8,7 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
-import ru.netflix.controller.entities.UserDto;
+import ru.netflix.controller.entities.entity.request.UserDto;
 import ru.netflix.model.User;
 import ru.netflix.repository.UserRepository;
 import ru.netflix.service.exeption.UserAlreadyExistException;
