@@ -1,0 +1,53 @@
+ label {
+    margin: 0;
+    cursor: pointer;
+}
+ label svg {
+    margin: 2px;
+    height: 25px;
+    width: 25px;
+    fill:  #B5B5B5 ;
+    transition: fill 0.3s;
+}
+ 
+.checked {
+  fill:   rgb(185, 3, 3) ;
+}
+
+.full-stars input {
+    position: absolute;
+    left: -9999px;
+}
+
+.full-stars label {
+    margin: 0;
+    cursor: pointer;
+}
+
+.full-stars label svg {
+    margin: 2px;
+    height: 25px;
+    width: 25px;
+    fill: rgb(185, 3, 3) ;
+    transition: fill 0.3s;
+}
+
+.full-stars input:checked ~ label svg {
+    fill: #B5B5B5;
+}
+
+.full-stars .rating-group:hover label svg {
+    fill: rgb(185, 3, 3);
+}
+
+.full-stars .rating-group input:hover ~ label svg {
+    fill: #B5B5B5;
+}
+
+.div-background {
+  background: linear-gradient(
+    rgba(0, 0, 0, 0.8), /* последний параметр регулирует прозрачность */
+    rgba(0, 0, 0, 0.8)
+  ), url('your-image.png');
+  background-size: cover; /* обеспечивает полное заполнение пространства фоном */
+}

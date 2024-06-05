@@ -1,0 +1,67 @@
+<!DOCTYPE>
+<html xmlns:th="https://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Screenwriters</title>
+<link rel="stylesheet" href="/css/admin/style.css">
+</head>
+<div>
+	<div layout:fragment="content">
+		<div sec:authorize="isAuthenticated()" class="d-flex justify-content-around border border-dark">
+			<div class="sort_radio">
+				<h3>По дате рождения</h3>
+				<input type="radio" id="data1" name="data" value="DESC"/>
+				<label for="data1">	Сначала новые</label>
+				<br> 
+				<input type="radio" id="data2" name="data" value="ASC">
+				<label for="data1">	Сначала старые</label>
+			</div>
+			<div class="sort_radio">
+				<h3>По дате добавления</h3>
+				<input type="radio" id="data1" name="created_data" value="DESC"/>
+				<label for="data1">	Сначала новые</label>
+				<br> 
+				<input type="radio" id="data2" name="created_data" value="ASC">
+				<label for="data1">	Сначала старые</label>
+			</div>
+			<div class="sort_radio">
+				<h3>По имени</h3>
+				<input type="radio" id="alphabet1" name="alphabet" value="ASC">
+				<label for="data1">	А-Я </label>
+				<br> 
+				<input type="radio" id="alphabet2" name="alphabet" value="DESC">
+				<label for="data1">	Я-А</label>
+			</div>
+		</div>
+		<a sec:authorize="isAuthenticated()"
+		onclick="sort()"
+		 style=" margin-left: 47%;color:black;" href="#">Сортировать</a>
+		
+		<ul class="pagination justify-content-center"
+			style="margin: 20px 0; cursor: pointer;"></ul>
+		<a href="/admin/directors/add" class="justify-content-center"
+		style="margin: 20px 0;">Добавить нового</a>
+		<div id="screenwriters" class="d-flex justify-content-center flex-wrap w-100">
+		</div>
+
+		<ul class="pagination justify-content-center"
+			style="margin: 20px 0; cursor: pointer;"></ul>
+	</div>
+</div>
+
+<th:block layout:fragment="script">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script type="text/JavaScript"
+		src="https://MomentJS.com/downloads/moment-with-locales.js">
+			</script>
+	<script src="/js/admin/sort-staff.js"></script>
+	<script src="/js/admin/screenwriters/screenwriters-table-paginator.js"></script>
+</th:block>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE>
+<html xmlns:th="https://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title th:text="${ModelFilm.film.name}"></title>
+<link rel="stylesheet" href="/css/admin/style.css">
+</head>
+<div>
+	<div layout:fragment="content">
+		<h1 th:text="'Обновить данныe фильма: '+${ModelFilm.film.name}"></h1>
+		<div class="updateData">
+			<div class="film">
+				<img class="image"
+						th:src="'http://localhost:8000/images/'+${ModelFilm.film.image}" alt="">
+				<p><b>Название:</b></p>
+				<input id="name" type="text" th:value="${ModelFilm.film.name}"/> 
+				<p><b>Описание:</b></p>
+				<p><textarea id="des" th:text="${ModelFilm.film.des}"> </textarea></p>
+				<p><b>Дата релиза:</b></p>
+				<input id="data_release" type="date"  th:value="${ModelFilm.film.release_date}"/> 
+				<p><b>Продолжительность  в мин.:</b></p>
+				<input id="length" type="text"  th:value="${ModelFilm.film.length}"/>
+				<p><b>URL постера:</b></p>
+				<input id="url"  class="form-control" type="text"  name="image"/>
+			</div>
+			<div class="dop-info">
+				<p><b>Жанр:</b></p>
+				<div class="updateGenre">
+					<div class="genre">
+						<div th:id="'block_genre_'+${genre.id}" th:each="genre: ${ModelFilm.genres}">
+							<label th:id="'selected_genre_'+${genre.id}" th:text="${genre.name}"></label>
+							<span th:id="'selected_genre_remove_'+${genre.id}" th:onclick="'deleteInListGnenres('+${genre.id}+')'" class="del"></span>
+						</div>
+					</div>
+					<input id="input_genres" list="genres">
+					<datalist id="genres" >
+						 <option th:each="genre: ${genres}" 
+						 th:id="'genre_'+${genre.id}" th:value="${genre.name}"></option>
+					</datalist>
+					<button onclick="addGenreInList()">Добавить</button>
+				</div>
+				<p><b>Страна:</b></p>
+				<div class="updateCountry">
+					<div class="country">
+						<div th:id="'block_country_'+${country.id}" th:each="country: ${ModelFilm.countries}">
+							<label th:id="'selected_country_'+${country.id}" th:text="${country.name}"></label>
+							<span th:id="'selected_country_remove_'+${country.id}" th:onclick="'deleteInListCountries('+${country.id}+')'" class="del"></span>
+						</div>
+					</div>
+					<input id="input_countries" list="counrties">
+					<datalist id="counrties">
+						 <option th:each="country: ${countries}" th:id="'country_'+${country.id}" th:value="${country.name}"></option>
+					</datalist>
+					<button onclick="addCountryInList()" id="addCountry">Добавить</button>
+				</div>
+
+			</div>
+			<div class="actors">
+				<p><b>Актерский состав:</b></p>
+				<div class="updateActors">
+					<div class="actor">
+						<div th:id="'block_actor_'+${actor.id}" th:each="actor: ${ModelFilm.actors}">
+							<label th:id="'selected_actor_'+${actor.id}" th:text="${actor.name}"></label>
+							<span th:id="'selected_actor_remove_'+${actor.id}" th:onclick="'deleteInListActors('+${actor.id}+')'" class="del"></span>
+						</div>
+					</div>
+					<input id="input_actors" list="actors">
+					<datalist id="actors">
+						 <option th:each="actor: ${actors}" th:id="'actor_'+${actor.id}" th:value="${actor.name}"></option>
+					</datalist>
+					<button onclick="addActorInList()" id="addActor">Добавить</button>
+				</div>
+				
+				<p><b>Режиссеры:</b></p>
+				<div class="updateDirectors">
+					<div class="director">
+						<div th:id="'block_director_'+${director.id}" th:each="director: ${ModelFilm.directors}">
+							<label th:id="'selected_director_'+${director.id}" th:text="${director.name}"></label>
+							<span th:id="'selected_director_remove_'+${director.id}" th:onclick="'deleteInListDirectors('+${director.id}+')'" class="del"></span>
+						</div>
+					</div>
+					<input id="input_directors" list="directors">
+					<datalist id="directors">
+						 <option th:each="director: ${directors}" th:id="'director_'+${director.id}" th:value="${director.name}"></option>
+					</datalist>
+					<button onclick="addDirectorInList()" id="addDirector">Добавить</button>
+				</div>
+				
+				<p><b>Сценаристы:</b></p>
+				<div class="updateScreenwriters">
+					<div class="screenwriter">
+						<div th:id="'block_screenwriter_'+${screenwriter.id}" th:each="screenwriter: ${ModelFilm.screenwriters}">
+							<label th:id="'selected_screenwriter_'+${screenwriter.id}" th:text="${screenwriter.name}"></label>
+							<span th:id="'selected_screenwriter_remove_'+${screenwriter.id}" th:onclick="'deleteInListScreenwriters('+${screenwriter.id}+')'" class="del"></span>
+						</div>
+					</div>
+					<input id="input_screenwriters" list="screenwriters">
+					<datalist id="screenwriters">
+						 <option th:each="screenwriter: ${screenwriters}" th:id="'screenwriter_'+${screenwriter.id}" th:value="${screenwriter.name}"></option>
+					</datalist>
+					<button onclick="addScreenwriterInList()" id="addScreenwriter">Добавить</button>
+				</div>
+			</div>
+		</div>
+        <button th:onclick="'saveChanges('+${ModelFilm.film.id}+')'" class="btn btn-danger" style="margin-left: 50%; width: 150px;">Сохранить</button>
+	</div>
+</div>
+
+<th:block layout:fragment="script">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		
+		<script src="/js/admin/dataCollect.js"></script>
+		<script src="/js/admin/workDatalist.js"></script>
+		<script src="/js/admin/films/updateFilm.js"></script>
+</th:block>
+</html>

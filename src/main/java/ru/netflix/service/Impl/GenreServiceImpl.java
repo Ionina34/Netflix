@@ -1,6 +1,5 @@
 package ru.netflix.service.Impl;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,20 +47,29 @@ public class GenreServiceImpl implements GenreService {
 		List<Genre> missingInGenresUpdate = genres.stream()
 				.filter(e -> genresUpdate.stream().noneMatch(g -> g.getName().equals(e.getName()))).toList();
 
-		for (Genre g : missingInGenres) {
-			Genre genre = genreRepository.findByName(g.getName());
-			if (genre == null) {
-				g.setCreated_at(LocalDate.now());
-				g.setUpdated_at(LocalDate.now());
-				genreRepository.save(g);
-			} else {
-				genre.addFilm(film);
-				genreRepository.save(genre);
-			}
-		}
+		addAMovieToAGenres(missingInGenres, film);
 
 		for (Genre genre : missingInGenresUpdate) {
 			genre.removeFilm(film.getId());
+			genreRepository.save(genre);
+		}
+	}
+
+	@Override
+	public void addFilmGenres(List<Genre> genres, Film film) {
+		addAMovieToAGenres(genres, film);
+	}
+	
+	private void addAMovieToAGenres(List<Genre> genres,Film film) {
+		for (Genre g : genres) {
+			Genre genre = genreRepository.findByName(g.getName());
+			if (genre == null) {
+				g.addGenre();
+				genreRepository.save(g);
+				g.addFilm(film);
+				genreRepository.save(g);
+			}
+			genre.addFilm(film);
 			genreRepository.save(genre);
 		}
 	}

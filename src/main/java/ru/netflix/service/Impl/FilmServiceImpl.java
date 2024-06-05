@@ -1,7 +1,6 @@
 
 package ru.netflix.service.Impl;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,11 @@ public class FilmServiceImpl implements FilmService {
 
 	@Autowired
 	private FilmRepository repository;
+	
+	@Override
+	public Film findByName(String name) {
+		return repository.findByName(name);
+	}
 	
 	@Override
 	public List<Film> findAllFilms() {
@@ -78,6 +82,16 @@ public class FilmServiceImpl implements FilmService {
 	}
 	
 	@Override
+	public List<Film> getFilmsByDirectorId(Long directorId) {
+		return repository.findFilmsByDirectorsId(directorId);
+	}
+	
+	@Override
+	public List<Film> getFilmsByScreenwriterId(Long screenwriterId) {
+		return repository.findFilmsByScreenwritersId(screenwriterId);
+	}
+	
+	@Override
 	public List<Film> getFilmsByUsersId(Long userId){
 		return repository.findFilmsByUsersId(userId);
 	}
@@ -98,9 +112,7 @@ public class FilmServiceImpl implements FilmService {
 
 	@Override
 	public void saveFilm(Film film) {
-		film.setImage("images/" + film.getName() + ".jpg");
-		film.setCreated_at(LocalDate.now());
-		film.setUpdated_at(LocalDate.now());
+		film.addFilm(film);
 		repository.save(film);
 	}
 
@@ -110,14 +122,13 @@ public class FilmServiceImpl implements FilmService {
 		if (film != null) {
 			film.update(updateFilm);
 
-			film.setUpdated_at(LocalDate.now());
 			repository.save(film);
 		}
 	}
 
 	@Override
-	public void deleteFilm(Long id) {
-		repository.deleteById(id);
+	public void delete(Long filmId) {
+		repository.deleteById(filmId);
 	}
 
 }

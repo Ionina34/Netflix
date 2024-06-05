@@ -14,6 +14,8 @@ import ru.netflix.model.Film;
 
 @Repository
 public interface FilmRepository extends JpaRepository<Film, Long> ,PagingAndSortingRepository<Film, Long>{
+	Film findByName(String name);
+	
 	//Для получения 10 раномных фильмов
 	@Query(value=
 			"SELECT r1.id,r1.created_at,r1.description,r1.image,r1.length,"

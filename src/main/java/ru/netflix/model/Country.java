@@ -48,4 +48,9 @@ public class Country {
 			film.getCountries().remove(this);
 		}
 	}
+	
+	public void addCountry() {
+		this.setCreated_at(LocalDate.now());
+		this.setUpdated_at(LocalDate.now());
+	}
 }

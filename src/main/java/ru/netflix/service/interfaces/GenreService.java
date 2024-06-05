@@ -12,4 +12,5 @@ public interface GenreService {
 	Genre findByName(String name);
 	
 	void updateFilmGenres(List<Genre> genresUpdate,Film film);
+	void addFilmGenres(List<Genre> genres,Film film);
 }

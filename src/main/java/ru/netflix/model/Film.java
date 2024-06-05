@@ -1,7 +1,6 @@
 package ru.netflix.model;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -51,33 +50,53 @@ public class Film {
 	@Column(name = "image")
 	private String image;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE, CascadeType.REFRESH }, mappedBy = "films")
+	@ManyToMany(fetch = FetchType.LAZY,
+			cascade = { CascadeType.REMOVE, CascadeType.REFRESH }, 
+			mappedBy = "films")
 	@JsonIgnore
 	private Set<Actor> actors = new HashSet<>();
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE, CascadeType.REFRESH }, mappedBy = "films")
+	@ManyToMany(fetch = FetchType.LAZY, 
+			cascade = { CascadeType.REMOVE, CascadeType.REFRESH }, 
+			mappedBy = "films")
 	@JsonIgnore
 	private Set<Country> countries = new HashSet<>();
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE, CascadeType.REFRESH }, mappedBy = "films")
+	@ManyToMany(fetch = FetchType.LAZY,
+			cascade = { CascadeType.REMOVE, CascadeType.REFRESH },
+			mappedBy = "films")
 	@JsonIgnore
 	private Set<Director> directors = new HashSet<>();
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE, CascadeType.REFRESH }, mappedBy = "films")
+	@ManyToMany(fetch = FetchType.LAZY,
+			cascade = { CascadeType.REMOVE, CascadeType.REFRESH },
+			mappedBy = "films")
 	@JsonIgnore
 	private Set<Genre> genres = new HashSet<>();
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE, CascadeType.REFRESH }, mappedBy = "films")
+	@ManyToMany(fetch = FetchType.LAZY,
+			cascade = { CascadeType.REMOVE, CascadeType.REFRESH },
+			mappedBy = "films")
 	@JsonIgnore
 	private Set<Screenwriter> screenwriters = new HashSet<>();
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE, CascadeType.REFRESH }, mappedBy = "films")
+	@ManyToMany(fetch = FetchType.LAZY, 
+			cascade = { CascadeType.REMOVE, CascadeType.REFRESH }, 
+			mappedBy = "films")
 	@JsonIgnore
 	private Set<User> users = new HashSet<>();
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE, CascadeType.REFRESH }, mappedBy = "ratedFilms")
+	@ManyToMany(fetch = FetchType.LAZY, 
+			cascade = { CascadeType.REMOVE, CascadeType.REFRESH }, 
+			mappedBy = "ratedFilms")
 	@JsonIgnore
 	private Set<User> userWhoRated = new HashSet<>();
+	
+	@ManyToMany(fetch = FetchType.LAZY, 
+			cascade = { CascadeType.REMOVE, CascadeType.REFRESH }, 
+			mappedBy = "commentedFilms")
+	@JsonIgnore
+	private Set<User> userWhoCommented = new HashSet<>();
 
 	public void update(Film updateFilm) {
 		this.name = updateFilm.name;
@@ -88,10 +107,19 @@ public class Film {
 			updateFilm.saveImage(updateFilm.image, updateFilm.name);
 			this.setImage(("films/" + this.name + ".jpg"));
 		}
-
+		this.setUpdated_at(LocalDate.now());
+	}
+	
+	public void addFilm(Film film) {
+		if (film.image != "") {
+			film.saveImage(film.image, film.name);
+			this.setImage(("films/" + this.name + ".jpg"));
+		}
+		this.setCreated_at(LocalDate.now());
+		this.setUpdated_at(LocalDate.now());
 	}
 
-	public void saveImage(String image_path, String name) {
+	private void saveImage(String image_path, String name) {
 		try {
 			String basePath = loadFilePath();
 			String filename = basePath + name + ".jpg";

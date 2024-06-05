@@ -20,7 +20,11 @@ if ($("#heart").length) {
 //Такая функция существует в файле favourite-films.js, здесь поменялся только функция success
 function addAMovieToFavorites(filmId) {
 	var getFilm = {};
-	getFilm["filmId"] = filmId;
+	
+	let film={}
+	film["id"]=filmId
+	
+	getFilm["film"] = film;
 
 	$.ajax({
 		type: "POST",
@@ -41,6 +45,7 @@ function addAMovieToFavorites(filmId) {
 		}
 	});
 }
+
 
 function setBackground(bg) {
 	if (bg == 'rgb(185, 3, 3)') return '#B5B5B5'

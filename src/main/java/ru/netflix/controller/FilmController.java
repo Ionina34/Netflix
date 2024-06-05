@@ -9,9 +9,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import lombok.RequiredArgsConstructor;
+import ru.netflix.controller.entities.entity.responce.FilmScoreAndComment;
 import ru.netflix.controller.entities.entity.responce.FilmViewModel;
+import ru.netflix.model.Comment;
 import ru.netflix.model.Film;
 import ru.netflix.model.Genre;
+import ru.netflix.model.Rating;
 import ru.netflix.service.interfaces.*;
 
 @Controller
@@ -24,6 +27,9 @@ public class FilmController {
 	private final ActorService actorService;
 	private final DirectorService directorService;
 	private final ScreenwriterService screenwriterService;
+	private final CommentService commentService;
+	private final RatingService ratingService;
+	private final IUserService userService;
 	
 	@GetMapping
 	public String mainHtml(Model model) {
@@ -53,12 +59,20 @@ public class FilmController {
 	}
 
 	@GetMapping("/{id}")
-	public String showFilmDetails(@PathVariable("id") Long id,Model model) {
+	public String showFilmDetails(@PathVariable("id") Long id,Model model,Principal principal) {
 
 		FilmViewModel viewModel = new FilmViewModel(filmService.getFilmById(id), genreService.findGenresByFilmsId(id),
 				countryService.findCountriesByFilmsId(id), actorService.findActorsByFilmsId(id),
 				directorService.findDirectorsByFilmsId(id), screenwriterService.findScreenwritersByFilmsId(id));
 		model.addAttribute("ModelFilm", viewModel);
+		model.addAttribute("comments", getFilmComments(id));
+		if(principal!=null) {
+			List<Rating> rating=ratingService.getRatingByUserIdAndFilmId(
+					userService.findByEmail(principal.getName()).get().getId(),
+					id);
+			System.out.println(rating!=null);
+			model.addAttribute("didTheUserRateIt", !rating.isEmpty());
+		}
 		return "film-details";
 	}
 	
@@ -66,5 +80,14 @@ public class FilmController {
 	public String showFavouritesFilms(Model model,Principal principal) {
 		model.addAttribute("activePage","fav");
 		return "favourites";
+	}
+	
+	private List<FilmScoreAndComment> getFilmComments(Long filmId){
+		List<FilmScoreAndComment> comments=new ArrayList<FilmScoreAndComment>();
+		for(Comment comment:commentService.findCommentByFilmsId(filmId)) {
+			Rating rating=ratingService.getRatingByUserIdAndFilmId(comment.getUser().getId(), filmId).getFirst();
+			comments.add(new FilmScoreAndComment(comment,rating.getValue()));
+		}
+		return comments;
 	}
 }

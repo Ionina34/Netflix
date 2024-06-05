@@ -1,0 +1,59 @@
+<!DOCTYPE>
+<html xmlns:th="https://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title th:text="${director.name}"></title>
+<link rel="stylesheet" href="/css/admin/style.css">
+</head>
+<div>
+	<div layout:fragment="content">
+		<h1 th:text="'Обновить данныe: '+${director.name}"></h1>
+		<div class="updateData">
+			<div class="staff">
+				<img class="image"
+						th:src="'http://localhost:8000/images/'+${director.photo}" alt="">
+				<p><b>Имя:</b></p>
+				<input id="name" type="text" th:value="${director.name}"/> 
+				<p><b>Краткая биография:</b></p>
+				<p><textarea id="brief_biography" th:text="${director.brief_biography}"> </textarea></p>
+				<p><b>Дата рождения:</b></p>
+				<input id="birthday" type="date"  th:value="${director.birthday}"/> 
+				<p><b>URL фото:</b></p>
+				<input id="url"  class="form-control" type="text"  name="image"/>
+			</div>
+			<div class="films">
+				<p><b>Фильмы:</b></p>
+				<div class="updateFilms">
+					<div class="film">
+						<div class="d-flex align-items-center" th:id="'block_film_'+${film.id}" th:each="film: ${filmsDirector}" style="width: 230px;">
+							<label th:id="'selected_film_'+${film.id}" th:text="${film.name}"></label>
+							<span th:id="'selected_film_remove_'+${film.id}" th:onclick="'deleteInListFilms('+${film.id}+')'" class="del"></span>
+						</div>
+					</div>
+					<input id="input_films" list="films">
+					<datalist id="films">
+						 <option th:each="film: ${films}" th:id="'film_'+${film.id}" th:value="${film.name}"></option>
+					</datalist>
+					<button onclick="addFilmInList()" id="addFilm">Добавить</button>
+				</div>
+			</div>
+		</div>
+        <button th:onclick="'saveChanges('+${director.id}+')'" class="btn btn-danger" style="margin-left: 50%; width: 150px;">Сохранить</button>
+	</div>
+</div>
+
+<th:block layout:fragment="script">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		
+		<script src="/js/admin/dataCollect.js"></script>
+		<script src="/js/admin/workDatalist.js"></script>
+		<script src="/js/admin/directors/updateDirector.js"></script>
+</th:block>
+</html>

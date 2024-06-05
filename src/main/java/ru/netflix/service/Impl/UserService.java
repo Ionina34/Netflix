@@ -1,6 +1,8 @@
 package ru.netflix.service.Impl;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 import ru.netflix.controller.entities.entity.request.UserDto;
+import ru.netflix.model.Film;
 import ru.netflix.model.User;
 import ru.netflix.repository.UserRepository;
 import ru.netflix.service.exeption.UserAlreadyExistException;
@@ -52,6 +55,12 @@ public class UserService implements IUserService{
 	@Override
 	public User save(User user) {
 		return repository.save(user);
+	}
+	
+	@Override
+	public List<Film> getRatedFilmsByUserId(Long userId) {
+		User user = repository.findById(userId).get();
+		return new ArrayList<Film>(user.getRatedFilms());
 	}
 
 }

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import ru.netflix.model.Country;
 import ru.netflix.model.Film;
-import ru.netflix.model.Genre;
 import ru.netflix.repository.CountryRepository;
 import ru.netflix.service.interfaces.CountryService;
 
@@ -45,7 +44,21 @@ public class CountryServiceImpl implements CountryService {
 				.filter(e->countriesUpdate.stream().noneMatch(g->g.getName().equals(e.getName())))
 				.toList();
 		
-		for(Country c: missingInCountries) {
+		addAMovieToACountries(missingInCountries, film);
+		
+		for(Country country: missingInCountriesUpdate) {
+			country.removeFilm(film.getId());
+			countryRepository.save(country);
+		}
+	}
+
+	@Override
+	public void addFilmCountries(List<Country> countries, Film film) {
+		addAMovieToACountries(countries, film);
+	}
+	
+	private void addAMovieToACountries(List<Country> countries,Film film) {
+		for(Country c: countries) {
 			Country country=countryRepository.findByName(c.getName());
 			if(country==null) {
 				c.setCreated_at(LocalDate.now());
@@ -58,11 +71,6 @@ public class CountryServiceImpl implements CountryService {
 				country.addFilm(film);
 				countryRepository.save(country);
 			}
-		}
-		
-		for(Country country: missingInCountriesUpdate) {
-			country.removeFilm(film.getId());
-			countryRepository.save(country);
 		}
 	}
 }

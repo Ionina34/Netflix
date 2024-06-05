@@ -12,4 +12,5 @@ public interface CountryService {
 	Country findByName(String country);
 	
 	void updateFilmCountries(List<Country> countriesUpdate,Film film);
+	void addFilmCountries(List<Country> countries,Film film);
 }

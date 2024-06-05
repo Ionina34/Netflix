@@ -39,6 +39,13 @@ public class User {
 			inverseJoinColumns = { @JoinColumn(name = "film_id") })
 	private Set<Film> ratedFilms = new HashSet<>();
 	
+	@ManyToMany(fetch = FetchType.LAZY,
+			cascade = { CascadeType.REMOVE, CascadeType.REFRESH })
+	@JoinTable(name = "user_film_comments", 
+			joinColumns = { @JoinColumn(name = "user_id") }, 
+			inverseJoinColumns = { @JoinColumn(name = "film_id") })
+	private Set<Film> commentedFilms = new HashSet<>();
+	
 	public void addFilm(Film film) {
 	    this.films.add(film);
 	    film.getUsers().add(this);

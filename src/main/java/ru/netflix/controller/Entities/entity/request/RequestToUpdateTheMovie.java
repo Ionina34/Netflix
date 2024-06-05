@@ -12,4 +12,6 @@ public class RequestToUpdateTheMovie {
 	List<Genre> genres;
 	List<Country> countries;
 	List<Actor> actors;
+	List<Director> directors;
+	List<Screenwriter> screenwriters;
 }

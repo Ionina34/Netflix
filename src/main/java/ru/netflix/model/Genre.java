@@ -48,4 +48,9 @@ public class Genre {
 			film.getGenres().remove(this);
 		}
 	}
+	
+	public void addGenre() {
+		this.setCreated_at(LocalDate.now());
+		this.setUpdated_at(LocalDate.now());
+	}
 }

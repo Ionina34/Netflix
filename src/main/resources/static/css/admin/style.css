@@ -11,7 +11,7 @@ input[type='radio'] {
 	color: black;
 }
 
-.film{
+.film, .staff{
 	width: 40%;
 	margin-top: 10px;
 }
@@ -55,7 +55,7 @@ th {
 	height: 30px;
 }
 
-.imageFilm{
+.image{
 	height: 300px;
     width: 200px;
     margin-left: 35%;
@@ -87,11 +87,19 @@ th {
   transform: rotate(45deg);
 }
 
-.dop-info div, .actors div{
+.dop-info div, .actors div, .films div{
 	margin-top: -15px;
 	margin-bottom: 15px;
 }
 
 .body{
 	margin-top: 100px;;
+}
+
+.director{
+	padding:0;
+}
+
+.redBorder{
+	border-color: red;
 }

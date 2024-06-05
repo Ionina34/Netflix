@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.data.domain.*;
 
 import ru.netflix.model.Film;
-import ru.netflix.model.Genre;
 
 public interface FilmService {
+	Film findByName(String name);
 	List<Film> findAllFilms();
 	Page<Film> findAllFilms(Pageable pageable);
 	Page<Film> findFilmsByUsersId(Long userId,Pageable pageable);
@@ -21,10 +21,12 @@ public interface FilmService {
 	Film getFilmById(Long id);
 	List<Film> getFilmsByGenreId(Long genreId);
 	List<Film> getFilmsByActorId(Long actorId);
+	List<Film> getFilmsByDirectorId(Long directorId);
+	List<Film> getFilmsByScreenwriterId(Long screenwriterId);
 	List<Film> getFilmsByUsersId(Long userId);
 	List<Film>getFavFilmByUserIdAndFilmId(Long userId,Long filmsId);
 	
 	void saveFilm(Film film);
 	void updateFilm(Long id,Film updateFilm);
-	void deleteFilm(Long id);
+	void delete(Long filmId);
 }

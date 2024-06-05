@@ -55,6 +55,10 @@ public class FavouriteFilmRestController {
 	public ResponseEntity<Film> addFilm(@RequestBody RequestFilmFav film, Principal principal) {
 		Film favFilm = new Film();
 		User user = userService.findByEmail(principal.getName()).get();
+		
+		if(film.getFilm().getName()=="") {
+			film.setFilm(filmService.getFilmById(film.getFilm().getId()));
+		}
 
 		if (filmService.getFavFilmByUserIdAndFilmId(user.getId(), film.getFilm().getId()).size() > 0) {
 			user.removeFilm(film.getFilm().getId());

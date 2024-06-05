@@ -27,7 +27,7 @@ public class RatedFilmsRestController {
 
 	@GetMapping("/user/films/rated")
 	public List<Film> getRatedFilmsBuUser(Principal principal) {
-		return ratingService.getRatedFilmsByUserId(userService.findByEmail(principal.getName()).get().getId());
+		return userService.getRatedFilmsByUserId(userService.findByEmail(principal.getName()).get().getId());
 	}
 
 	// Метод для выставления оценки фильма пользователем

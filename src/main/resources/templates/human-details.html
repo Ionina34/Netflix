@@ -38,7 +38,7 @@
 						<div th:each="film:${films}">
 							<div class="card">
 								<a id="more-info" th:href="@{/films/{id}(id=${film.id})}"> <img
-									th:src="'../'+${film.image}" th:alt="${film.name}" class="item"></a>
+									th:src="'../images/'+${film.image}" th:alt="${film.name}" class="item"></a>
 								<a th:href="@{/films/{id}(id=${film.id})}"
 									th:text="${film.name}"></a>
 							</div>
@@ -73,9 +73,6 @@
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"
 		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.min.js"
-		crossorigin="anonymous"></script>
 	<script type="text/JavaScript"
 		src="https://MomentJS.com/downloads/moment-with-locales.js">
 			</script>
