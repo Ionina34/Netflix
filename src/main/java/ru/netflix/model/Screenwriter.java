@@ -81,6 +81,17 @@ public class Screenwriter {
 		this.updated_at=LocalDate.now();
 	}
 	
+	public void update(Director updateScreenwriter) {
+		this.name=updateScreenwriter.getName();
+		this.birthday=updateScreenwriter.getBirthday();
+		this.brief_biography=updateScreenwriter.getBrief_biography();
+		if (updateScreenwriter.getPhoto() != "") {
+			this.saveImage(updateScreenwriter.getPhoto(), updateScreenwriter.getName());
+			this.setPhoto(("screenwriter/" + this.name + ".jpg"));
+		}
+		this.updated_at=LocalDate.now();
+	}
+	
 	private void saveImage(String image_path, String name) {
 		try {
 			String basePath = loadFilePath();

@@ -1,6 +1,5 @@
 package ru.netflix.service.Impl;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +7,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import ru.netflix.model.Actor;
 import ru.netflix.model.Director;
 import ru.netflix.model.Film;
-import ru.netflix.repository.ActorRepository;
+import ru.netflix.model.Screenwriter;
 import ru.netflix.repository.DirectorRepository;
 import ru.netflix.repository.FilmRepository;
+import ru.netflix.repository.ScreenwriterRepository;
 import ru.netflix.service.interfaces.DirectorService;
 
 @Service
@@ -23,6 +22,9 @@ public class DirectorServiceImpl implements DirectorService{
 	
 	@Autowired
 	private FilmRepository filmRepository;
+	
+	@Autowired 
+	private ScreenwriterRepository screenwriterRepository;
 	
 	@Override
 	public List<Director> getAll() {
@@ -61,6 +63,13 @@ public class DirectorServiceImpl implements DirectorService{
 			director.update(updateDirector);
 
 			directorRepository.save(director);
+		}
+		
+		Screenwriter screenwriter=screenwriterRepository.findByName(director.getName());
+		if(screenwriter!=null) {
+			screenwriter.update(updateDirector);
+			
+			screenwriterRepository.save(screenwriter);
 		}
 	}
 

@@ -1,6 +1,5 @@
 package ru.netflix.service.Impl;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +7,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import ru.netflix.model.Actor;
+import ru.netflix.model.Director;
 import ru.netflix.model.Film;
 import ru.netflix.model.Screenwriter;
+import ru.netflix.repository.DirectorRepository;
 import ru.netflix.repository.FilmRepository;
 import ru.netflix.repository.ScreenwriterRepository;
 import ru.netflix.service.interfaces.ScreenwriterService;
@@ -22,6 +22,9 @@ public class ScreenwriterServiceImpl implements ScreenwriterService {
 	
 	@Autowired
 	private FilmRepository filmRepository;
+	
+	@Autowired
+	public DirectorRepository directorRepository;
 	
 	@Override
 	public List<Screenwriter> getAll() {
@@ -54,12 +57,20 @@ public class ScreenwriterServiceImpl implements ScreenwriterService {
 	}
 	
 	@Override
-	public void updateScreenwriter(Long actorId, Screenwriter updateScreenwriter) {
-		Screenwriter screenwriter = screenwriterRepository.findById(actorId).orElse(null);
+	public void updateScreenwriter(Long screenwriterId, Screenwriter updateScreenwriter) {
+		Screenwriter screenwriter = screenwriterRepository.findById(screenwriterId).orElse(null);
 		if (screenwriter != null) {
 			screenwriter.update(updateScreenwriter);
 
 			screenwriterRepository.save(screenwriter);
+		}
+		
+		//Один и тот же человек может быть и сценаристом, и режисером
+		Director director=directorRepository.findByName(screenwriter.getName());
+		if(director!=null) {
+			director.update(updateScreenwriter);
+			
+			directorRepository.save(director);
 		}
 	}
 

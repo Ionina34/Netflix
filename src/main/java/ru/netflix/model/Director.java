@@ -81,6 +81,17 @@ public class Director {
 		this.updated_at=LocalDate.now();
 	}
 	
+	public void update(Screenwriter updateDirector) {
+		this.name=updateDirector.getName();
+		this.birthday=updateDirector.getBirthday();
+		this.brief_biography=updateDirector.getBrief_biography();
+		if (updateDirector.getPhoto() != "") {
+			this.saveImage(updateDirector.getPhoto(), updateDirector.getName());
+			this.setPhoto(("directors/" + this.name + ".jpg"));
+		}
+		this.updated_at=LocalDate.now();
+	}
+	
 	private void saveImage(String image_path, String name) {
 		try {
 			String basePath = loadFilePath();

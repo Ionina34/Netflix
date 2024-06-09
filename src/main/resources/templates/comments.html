@@ -6,8 +6,8 @@
 		<section>
 			<div class="container my-2 py-5">
 				<div class="row d-flex justify-content-center">
-					<div class="col-md-12 col-lg-10 col-xl-8">
-						<div class="card" th:each="comment: ${comments}">
+					<div class="col-md-12 col-lg-10 col-xl-8" id="block-comments">
+						<div class="card mb-4" th:each="comment: ${comments}">
 							<div class="div-background card-body bg-light">
 								<!-- Сделать мах-высоту и scroll -->
 								<div class="w-100 d-flex flex-start align-items-center">
@@ -114,9 +114,9 @@
 						</div>
 					</div>
 					<div class="float-end mt-2 pt-1">
-						<button type="button" class="btn btn-danger btn-sm">Отправить
+						<button type="button" class="btn btn-danger btn-sm" th:onclick="'submit('+${ModelFilm.film.id}+')'">Отправить
 							отзыв</button>
-						<button type="button" class="btn btn-outline-danger btn-sm">Очистить</button>
+						<button type="button" class="btn btn-outline-danger btn-sm" onclick="clean()">Очистить</button>
 					</div>
 				</div>
 			</div>

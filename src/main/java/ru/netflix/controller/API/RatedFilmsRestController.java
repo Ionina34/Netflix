@@ -33,11 +33,7 @@ public class RatedFilmsRestController {
 	// Метод для выставления оценки фильма пользователем
 	@PostMapping("/user/film/rating/add")
 	public ResponseEntity<Film> addRating(@RequestBody RequestBodyTheFilmIsForEvaluation info, Principal principal) {
-		Rating rating = new Rating();
-		rating.setUser(userService.findByEmail(principal.getName()).get());
-		rating.setFilm(info.getFilm());
-		rating.setValue(info.getRating());
-		ratingService.save(rating);
+		ratingService.save(info.getFilm(),info.getRating(),principal);
 
 		return new ResponseEntity<Film>(info.getFilm(), HttpStatus.OK);
 	}

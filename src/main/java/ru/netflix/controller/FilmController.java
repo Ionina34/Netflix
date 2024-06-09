@@ -33,7 +33,6 @@ public class FilmController {
 	
 	@GetMapping
 	public String mainHtml(Model model) {
-		//List<Film> films= filmService.findRandomFilms();
 		List<Film> films= filmService.getTop10FilmsByAverageRating();
 		ArrayList<Genre> genres=new ArrayList<>(genreService.getRandomGenres());
 		
@@ -70,7 +69,6 @@ public class FilmController {
 			List<Rating> rating=ratingService.getRatingByUserIdAndFilmId(
 					userService.findByEmail(principal.getName()).get().getId(),
 					id);
-			System.out.println(rating!=null);
 			model.addAttribute("didTheUserRateIt", !rating.isEmpty());
 		}
 		return "film-details";
@@ -85,8 +83,9 @@ public class FilmController {
 	private List<FilmScoreAndComment> getFilmComments(Long filmId){
 		List<FilmScoreAndComment> comments=new ArrayList<FilmScoreAndComment>();
 		for(Comment comment:commentService.findCommentByFilmsId(filmId)) {
-			Rating rating=ratingService.getRatingByUserIdAndFilmId(comment.getUser().getId(), filmId).getFirst();
-			comments.add(new FilmScoreAndComment(comment,rating.getValue()));
+			List<Rating> rating=ratingService.getRatingByUserIdAndFilmId(comment.getUser().getId(), filmId);
+			comments.add(new FilmScoreAndComment(comment
+					,!rating.isEmpty()?rating.getFirst().getValue():0));
 		}
 		return comments;
 	}
