@@ -49,6 +49,9 @@ public class Film {
 
 	@Column(name = "image")
 	private String image;
+	
+	@Column(name="views")
+	private int views;
 
 	@ManyToMany(fetch = FetchType.LAZY,
 			cascade = { CascadeType.REMOVE, CascadeType.REFRESH }, 

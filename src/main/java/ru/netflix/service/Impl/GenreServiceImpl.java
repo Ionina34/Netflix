@@ -69,8 +69,10 @@ public class GenreServiceImpl implements GenreService {
 				g.addFilm(film);
 				genreRepository.save(g);
 			}
-			genre.addFilm(film);
-			genreRepository.save(genre);
+			else {
+				genre.addFilm(film);
+				genreRepository.save(genre);
+			}
 		}
 	}
 

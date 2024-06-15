@@ -9,5 +9,6 @@ import ru.netflix.model.Comment;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long>{
+	/** Получение комментарии фильма */
 	List<Comment> findCommentsByFilmId(Long filmId);
 }

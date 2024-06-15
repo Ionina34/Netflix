@@ -18,6 +18,7 @@ import ru.netflix.service.interfaces.IUserService;
 import ru.netflix.service.interfaces.RatingService;
 
 @RestController
+/** Контроллер для оценки фильма пользователем*/
 public class RatedFilmsRestController {
 	@Autowired
 	private RatingService ratingService;
@@ -26,12 +27,14 @@ public class RatedFilmsRestController {
 	private IUserService userService;
 
 	@GetMapping("/user/films/rated")
+	/** Метод для получения оценненых фильмов пользователя*/
 	public List<Film> getRatedFilmsBuUser(Principal principal) {
 		return userService.getRatedFilmsByUserId(userService.findByEmail(principal.getName()).get().getId());
 	}
-
-	// Метод для выставления оценки фильма пользователем
+	
 	@PostMapping("/user/film/rating/add")
+	/** Метод для выставления оценки фильма пользователем 
+	 * @param info - фильм и оценка*/
 	public ResponseEntity<Film> addRating(@RequestBody RequestBodyTheFilmIsForEvaluation info, Principal principal) {
 		ratingService.save(info.getFilm(),info.getRating(),principal);
 

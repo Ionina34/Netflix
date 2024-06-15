@@ -34,7 +34,7 @@
 		<div>
 			<div id="wrapper">
 				<div id="carousel">
-					<div id="content">
+					<div id="content" class="d-flex justify-content-center">
 						<div th:each="film:${films}">
 							<div class="card">
 								<a id="more-info" th:href="@{/films/{id}(id=${film.id})}"> <img
@@ -76,6 +76,7 @@
 	<script type="text/JavaScript"
 		src="https://MomentJS.com/downloads/moment-with-locales.js">
 			</script>
+	<script src="/js/animation/caruselActor.js"></script>		
 	<script src="/js/search.js"></script>
 </th:block>
 </html>

@@ -17,6 +17,7 @@ public class ActorController {
 	private final FilmService filmService;
 	
 	@GetMapping("/{id}")
+	/** Метод для отображения инф-ции об актере*/
 	public String showActorDetails(@PathVariable("id") Long id,Model model) {
 		model.addAttribute("human", actorService.findActorById(id));
 		model.addAttribute("films", filmService.getFilmsByActorId(id));

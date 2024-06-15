@@ -1,3 +1,4 @@
+
 package ru.netflix.controller.API;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import ru.netflix.model.Film;
 import ru.netflix.service.interfaces.*;
 
 @RestController
+/** Контроллер администратора для работы с фильмами */
 public class AdminFilmRestController {
 	@Autowired
 	private FilmService  filmService;
@@ -38,11 +40,16 @@ public class AdminFilmRestController {
 	private ScreenwriterService screenwriterService;
 	
 	@GetMapping("/admin/films/get")
+	/** Метод для получения всех фильмов
+	 *  @param pageable - для пагинации*/
 	public ResponseEntity<Page<Film>> getAllFilms(Pageable pageable){
 		return ResponseEntity.ok(filmService.findAllFilms(pageable));
 	}
 	
 	@PutMapping("/admin/films/update")
+	/** Метод для обновления фильма
+	 * @param data - данные для обновления
+	 * (id фильма, инф-ция для обновления, списки стаффа)*/
 	public ResponseEntity<Film> updateFilm(@RequestBody RequestToUpdateTheMovie data){
 		filmService.updateFilm(data.getFilmId(), data.getFilm());
 		
@@ -57,6 +64,8 @@ public class AdminFilmRestController {
 	}
 	
 	@PostMapping("/admin/films/add")
+	/** Метод для добавления фильма
+	 * @param data - данные для добавления (данные фильма, списки стаффа) */
 	public ResponseEntity<Film> addFilm(@RequestBody RequestToAddAMovie data){
 		filmService.saveFilm(data.getFilm());
 		
@@ -70,6 +79,8 @@ public class AdminFilmRestController {
 		return ResponseEntity.ok(data.getFilm());
 	}
 	
+	/** Метод дляя удаления фильма
+	 * @param id - id удаляемого фильма */
 	@DeleteMapping("/admin/films/delete/{id}")
 	public ResponseEntity<Long> deleteFilm(@PathVariable Long id) {
 	    filmService.delete(id);

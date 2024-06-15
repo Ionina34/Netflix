@@ -35,6 +35,8 @@ public class AdminFilmController {
 	private final ScreenwriterService screenwriterService;
 
 	@GetMapping()
+	/** Метод для отображения страницы всех фильмов
+	 * включая жанры и страны для сортировки*/
 	public String showAdminPanel(Model model) {
 		model.addAttribute("genres", genreService.getAll());
 		model.addAttribute("countries", countryService.getAll());
@@ -43,21 +45,26 @@ public class AdminFilmController {
 	}
 	
 	@GetMapping("/update/{id}")
+	/** Метод для отображеняи страницы обновления фильма
+	 * @param id - id фильма*/
 	public String updateFilmView(Model model,@PathVariable("id") Long id) {
+		//Информация о фильме
 		FilmViewModel viewModel = new FilmViewModel(filmService.getFilmById(id), genreService.findGenresByFilmsId(id),
 				countryService.findCountriesByFilmsId(id), actorService.findActorsByFilmsId(id),
 				directorService.findDirectorsByFilmsId(id), screenwriterService.findScreenwritersByFilmsId(id));
 		model.addAttribute("ModelFilm", viewModel);
 		
-		model.addAttribute("genres", deleteGenreInList(genreService.getAll(), viewModel.getGenres()));
-		model.addAttribute("countries", deleteCountryInList(countryService.getAll(), viewModel.getCountries()));
-		model.addAttribute("actors", deleteActorInList(actorService.getAll(), viewModel.getActors()));
-		model.addAttribute("directors", deleteDirectorInList(directorService.getAll(), viewModel.getDirectors()));
-		model.addAttribute("screenwriters", deleteScreenwriterInList(screenwriterService.getAll(), viewModel.getScreenwriters()));
+		//Информация доступная для обновления
+		model.addAttribute("genres", deleteInList(genreService.getAll(), viewModel.getGenres()));
+		model.addAttribute("countries", deleteInList(countryService.getAll(), viewModel.getCountries()));
+		model.addAttribute("actors", deleteInList(actorService.getAll(), viewModel.getActors()));
+		model.addAttribute("directors", deleteInList(directorService.getAll(), viewModel.getDirectors()));
+		model.addAttribute("screenwriters", deleteInList(screenwriterService.getAll(), viewModel.getScreenwriters()));
 		return "admin/films/updateFilm";
 	}
 	
 	@GetMapping("/add")
+	//Метод для отображения страницы добавления фильма
 	public String addFilmView(Model model) {
 		model.addAttribute("genres",genreService.getAll());
 		model.addAttribute("countries",countryService.getAll());
@@ -67,23 +74,10 @@ public class AdminFilmController {
 		return "admin/films/addFilm";
 	}
 	
-	private List<Genre> deleteGenreInList(List<Genre> genres,List<Genre> genresFilm){
-		return genres.stream().filter(x->!genresFilm.contains(x)).toList();
-	}
-	
-	private List<Country> deleteCountryInList(List<Country> countries,List<Country> countriesFilm){
-		return countries.stream().filter(x->!countriesFilm.contains(x)).toList();
-	}
-	
-	private List<Actor> deleteActorInList(List<Actor> actors,List<Actor> actorsFilm){
-		return actors.stream().filter(x->!actorsFilm.contains(x)).toList();
-	}
-	
-	private List<Director> deleteDirectorInList(List<Director> directors,List<Director> directorsFilm){
-		return directors.stream().filter(x->!directorsFilm.contains(x)).toList();
-	}
-	
-	private List<Screenwriter> deleteScreenwriterInList(List<Screenwriter> screenwriters,List<Screenwriter> screenwritersFilm){
-		return screenwriters.stream().filter(x->!screenwritersFilm.contains(x)).toList();
+	/** Метод для удаления стаффа, которые есть у фильма из списка
+	 * @param staff - список всего стаффа
+	 * @param staffFilm - стафф фильма */
+	private static List<?> deleteInList(List<?> staff, List<?> staffFilm){
+		return staff.stream().filter(x->!staffFilm.contains(x)).toList();
 	}
 }

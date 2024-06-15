@@ -19,15 +19,21 @@ import ru.netflix.model.Actor;
 import ru.netflix.service.interfaces.ActorService;
 
 @RestController
+/** Контроллер администратора для работы с актерами */
 public class AdminActorRestController {
 	@Autowired
 	private ActorService actorService;
 	
+	/** Метод для получения все актеров
+	 *  @param pageable - для пагинации*/
 	@GetMapping("/admin/actors/get")
 	public ResponseEntity<Page<Actor>> getAllActor(Pageable pageable){
 		return ResponseEntity.ok(actorService.findAllActors(pageable));
 	}
 	
+	/** Метод для обновления актера
+	 * @param data - данные для обновления
+	 * (id актера, новая инф-ия, список фильмов)*/
 	@PutMapping("/admin/actors/update")
 	public ResponseEntity<Actor> updateActor(@RequestBody RequestToUpdateTheActor data){
 		actorService.updateActor(data.getActorId(), data.getActor());
@@ -39,6 +45,8 @@ public class AdminActorRestController {
 	}
 	
 	@PostMapping("/admin/actors/add")
+	/** Метод для добавления актера
+	 * @param data - данные для добавления (инф-ия об актере, список фильмов) */
 	public ResponseEntity<Actor> addActor(@RequestBody RequestToAddAActor data){
 		actorService.saveActor(data.getActor());
 		
@@ -48,6 +56,8 @@ public class AdminActorRestController {
 		return ResponseEntity.ok(actor);
 	}
 	
+	/** Метод дляя удаления актера
+	 * @param id - id удаляемого актера */
 	@DeleteMapping("/admin/actors/delete/{id}")
 	public ResponseEntity<Long> deleteActor(@PathVariable Long id) {
 	    actorService.delete(id);
@@ -55,6 +65,11 @@ public class AdminActorRestController {
 	    return  ResponseEntity.ok(id);
 	}
 	
+	/** Метод для сортировки актеров
+	 * @param pageable - для пагинации
+	 * @param data - дата рождения
+	 * @param alphabet - по алфавиту
+	 * @param created - дата создания записи в бд*/
 	@GetMapping("/admin/actors/sort")
 	public Page<Actor> actorsSort(Pageable pageable, @RequestParam(name="data") String data,
 			@RequestParam(name = "alphabet") String alphabet, @RequestParam(name = "created") String created){

@@ -21,6 +21,7 @@ import ru.netflix.service.interfaces.FilmService;
 import ru.netflix.service.interfaces.IUserService;
 
 @RestController
+/** Контроллер для работы с избранными фильмами */
 public class FavouriteFilmRestController {
 	@Autowired
 	private IUserService userService;
@@ -28,28 +29,30 @@ public class FavouriteFilmRestController {
 	@Autowired
 	private FilmService filmService;
 	
-	/* Получет список всех избранных фильмов пользователя для дальнейшей проверки */
+	/** Получет список всех избранных фильмов пользователя для дальнейшей проверки */
 	@GetMapping("/user/films")
 	public List<Film> findFilmByUserId(Principal principal) {
 		return filmService.getFilmsByUsersId(userService.findByEmail(principal.getName()).get().getId());
 	}
 
-	//Получает избранные фильмы пользователя по-странично
+	/** Получает избранные фильмы пользователя по-странично */
 	@GetMapping("/user/films/fav")
 	public Page<Film> getAllFilms(Pageable pageable, Principal principal) {
 		return filmService.findFilmsByUsersId(userService.findByEmail(principal.getName()).get().getId(), pageable);
 	}
 	
-	//Для проверки есть фильм в избранном
+	/** Для проверки есть фильм в избранном 
+	 * @param filmId - id фильма*/
 	@GetMapping("/user/film/fav")
 	public boolean searchForAMovieInFav(@RequestParam(name="filmId") Long filmId,Principal principal) {
 		return filmService.getFavFilmByUserIdAndFilmId(userService.findByEmail
 				(principal.getName()).get().getId(), filmId).size() > 0;
 	}
 
-	/*
+	/**
 	 * Метод для добаления фильма к списку избранных, в этом же методе происходит
 	 * удаление, если фильм уже есть в этом списке
+	 * @param film - фильм
 	 */
 	@PostMapping("/user/films/add")
 	public ResponseEntity<Film> addFilm(@RequestBody RequestFilmFav film, Principal principal) {
@@ -66,14 +69,16 @@ public class FavouriteFilmRestController {
 		} else {
 			user.addFilm(film.getFilm());
 			userService.save(user);
+			filmService.actionWithTheFilm(film.getFilm().getId());
 		}
 		return new ResponseEntity<Film>(favFilm, HttpStatus.OK);
 
 	}
 	
-	/*
+	/**
 	 * Метод удаления, выделлыннйм в отдельный метод для удаления из списка на
 	 * прямую без проверок со старницы избранных фильмов
+	 * @param film - фильм
 	 */
 	@PostMapping("/user/films/remove")
 	public ResponseEntity<Film> removeFilm(@RequestBody RequestFilmFav film, Principal principal) {

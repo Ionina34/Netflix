@@ -1,8 +1,10 @@
 package ru.netflix.service.interfaces;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.domain.*;
+import org.springframework.data.repository.query.Param;
 
 import ru.netflix.model.Film;
 
@@ -14,9 +16,14 @@ public interface FilmService {
 	Page<Film> findFilmsByGenresId(Long genreId,Pageable pageable);
 	Page<Film> findFilmsByCountryId(Long countryId,Pageable pageable);
 	Page<Film> findByFilterContainingIgnoreCase(String filter,Pageable pageable);
+	Page<Film> getFilmsOrderByNameAndReleaseDate(String orderData, String orderName, Pageable pageable);
+	Page<Film> findByGenresNameAndCountriesNameOrderByReleaseDateOrderByName(String genreName,
+			String countryName, String orderData, String orderName, Pageable pageable);
 	
-	List<Film> findRandomFilms();
+	Film findRandomFilm();
 	List<Film> getTop10FilmsByAverageRating();
+	List<Film> findAllByOrderByViewsAsc();
+	List<Film> getNewFilms(LocalDate startDate,LocalDate endDate);
 	
 	Film getFilmById(Long id);
 	List<Film> getFilmsByGenreId(Long genreId);
@@ -29,4 +36,6 @@ public interface FilmService {
 	void saveFilm(Film film);
 	void updateFilm(Long id,Film updateFilm);
 	void delete(Long filmId);
+	
+	void actionWithTheFilm(Long filmId);
 }

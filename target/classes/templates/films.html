@@ -9,38 +9,39 @@
 </head>
 <div>
 	<div layout:fragment="content">
-		<div  class="d-flex justify-content-around border border-danger">
+		<div class="d-flex justify-content-around border border-danger">
 			<div class="sort_radio">
 				<h3>Дата</h3>
 				<input type="radio" id="data1" name="data" value="DESC">Сначала
-				новые <br> 
-				<input type="radio" id="data2" name="data" value="ASC">Сначала старые
+				новые <br> <input type="radio" id="data2" name="data"
+					value="ASC">Сначала старые
 			</div>
 			<div class="sort_radio">
 				<h3>Алфавит</h3>
-				<input type="radio" id="alphabet1" name="alphabet" value="ASC">А-Я <br> 
-				<input type="radio" id="alphabet2" name="alphabet"
+				<input type="radio" id="alphabet1" name="alphabet" value="ASC">А-Я
+				<br> <input type="radio" id="alphabet2" name="alphabet"
 					value="DESC">Я-А
 			</div>
 			<div>
 				<h3>Жанр</h3>
-				<select  class="js-select2" id= "genre" name="genre" placeholder="Выберите жанр ">
+				<select class="js-select2" id="genre" name="genre"
+					placeholder="Выберите жанр ">
 					<option value="" selected="selected"></option>
-					<option th:each="genre: ${genres}" th:value="${genre.name}" th:text="${genre.name}"></option>
+					<option th:each="genre: ${genres}" th:value="${genre.name}"
+						th:text="${genre.name}"></option>
 				</select>
 			</div>
 			<div>
 				<h3>Страна</h3>
-				<select  class="js-select2" id="country" name="country"
+				<select class="js-select2" id="country" name="country"
 					placeholder="Выберите страну ">
 					<option value="" selected="selected"></option>
-					<option th:each="country: ${countries}" th:value="${country.name}" th:text="${country.name}"></option>
+					<option th:each="country: ${countries}" th:value="${country.name}"
+						th:text="${country.name}"></option>
 				</select>
 			</div>
 		</div>
-		<a
-		onclick="sort()"
-		 style=" margin-left: 47%;" href="#">Сортировать</a>
+		<a onclick="sort()" style="margin-left: 47%;" href="#">Сортировать</a>
 
 		<ul class="pagination justify-content-center"
 			style="margin: 20px 0; cursor: pointer;"></ul>
@@ -61,7 +62,8 @@
 	<script type="text/JavaScript"
 		src="https://MomentJS.com/downloads/moment-with-locales.js">
 			</script>
-			
+
+	<script src="/js/buildPagination.js"></script>
 	<script src="/js/table-pagination.js"></script>
 	<script src="/js/favourite-films.js"></script>
 	<script src="/js/sort.js"></script>

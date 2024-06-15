@@ -175,7 +175,7 @@ function addDirectorInList() {
 
 	let row = '<div id="block_director_' + directorId + '">' +
 		'<label id="selected_director_' + directorId + '" class="text-dark">' + director.val() + '</label>' +
-		'<span id="selected_director_remove_' + directorId + '" onclick="deleteInListDirector(' + directorId + ')" class="del"></span></div>';
+		'<span id="selected_director_remove_' + directorId + '" onclick="deleteInListDirectors(' + directorId + ')" class="del"></span></div>';
 
 	$(".director").append(row)
 
@@ -204,7 +204,7 @@ function addScreenwriterInList() {
 
 	let row = '<div id="block_screenwriter_' + screenwriterId + '">' +
 		'<label id="selected_screenwriter_' + screenwriterId + '" class="text-dark">' + screenwriter.val() + '</label>' +
-		'<span id="selected_screenwriter_remove_' + screenwriterId + '" onclick="deleteInListScreenwriter(' + screenwriterId + ')" class="del"></span></div>';
+		'<span id="selected_screenwriter_remove_' + screenwriterId + '" onclick="deleteInListScreenwriters(' + screenwriterId + ')" class="del"></span></div>';
 
 	$(".screenwriter").append(row)
 

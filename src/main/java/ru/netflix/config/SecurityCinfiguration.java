@@ -32,7 +32,7 @@ public class SecurityCinfiguration {
 						.requestMatchers("/films/search/**").permitAll()
 						.requestMatchers("/films/all/get").permitAll()
 						.requestMatchers("/films/sort").permitAll()
-						.requestMatchers("/actors/{id}").permitAll()
+						.requestMatchers("/actor/{id}").permitAll()
 						.requestMatchers("/admin/**").hasRole("ADMIN")
 						.requestMatchers("/admin/films/update").hasRole("ADMIN")
 						.anyRequest().hasRole("USER"))

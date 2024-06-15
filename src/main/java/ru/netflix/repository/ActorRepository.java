@@ -14,12 +14,16 @@ import ru.netflix.model.Actor;
 @Repository
 public interface ActorRepository extends JpaRepository<Actor, Long>
 {
+	/** Все актеры с пагинацией */
 	Page<Actor> findAll(Pageable pageable);
 	
+	/** Актеры определенного фильма */
 	List<Actor> findActorsByFilmsId(Long filmId);
 	
+	/** Поиск актера по имени */
 	Actor findByName(String name);
 	
+	/** Получения актеров с сортировкой по 3 столбцам */
 	@Query("SELECT a FROM Actor a "
 			+"ORDER BY CASE WHEN :orderName = 'ASC' THEN a.name END ASC, "
 			+"CASE WHEN :orderName = 'DESC' THEN a.name END DESC, "

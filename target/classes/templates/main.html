@@ -18,7 +18,6 @@
 						th:src="'../images/'+${film.image}"></li>
 				</ul>
 			</div>
-			<hr>
 			<div th:each="film,state:${films}">
 				<div th:id="${state.index}" th:class="containerText">
 					<h2>
@@ -40,29 +39,14 @@
 				</div>
 			</div>
 		</div>
-
-		<div class="genre" th:each="genre,state: ${genres}">
-			<div th:id="'wrapper-'+${state.count}">
-				<h1 th:text="${genre.name}+':'"></h1>
-				<div th:id="'carousel-'+${state.count}">
-					<div th:id="'content-'+${state.count}">
-						<div th:if="${state.count==1}" th:each="film: ${filmsByGenreOne}">
-							<div class="card">
-								<a id="more-info" th:href="@{/films/{id}(id=${film.id})}"> <img
-									th:src="'../images/'+${film.image}" th:alt="${film.name}"
-									class="item"></a> <a th:href="@{/films/{id}(id=${film.id})}"
-									th:text="${film.name}"></a>
-							</div>
-						</div>
-						<div th:if="${state.count==2}" th:each="film: ${filmsByGenreTwo}">
-							<div class="card">
-								<a id="more-info" th:href="@{/films/{id}(id=${film.id})}"> <img
-									th:src="'../images/'+${film.image}" th:alt="${film.name}"
-									class="item"></a> <a th:href="@{/films/{id}(id=${film.id})}"
-									th:text="${film.name}"></a>
-							</div>
-						</div>
-						<div th:if="${state.count==3}" th:each="film: ${filmsByGenreTree}">
+		<hr>
+		
+		<div class="film-group">
+			<div id="wrapper-3">
+				<h1>Сейчас смотрят</h1>
+				<div id="carousel-3">
+					<div id="content-3">
+						<div th:each="film: ${watchingItNnow}">
 							<div class="card">
 								<a id="more-info" th:href="@{/films/{id}(id=${film.id})}"> <img
 									th:src="'../images/'+${film.image}" th:alt="${film.name}"
@@ -72,7 +56,7 @@
 						</div>
 					</div>
 				</div>
-				<button th:id="'prev-'+${state.count}">
+				<button id="prev-3">
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
 						viewBox="0 0 24 24">
                 <path fill="none" d="M0 0h24v24H0V0z" />
@@ -80,7 +64,7 @@
 							d="M15.61 7.41L14.2 6l-6 6 6 6 1.41-1.41L11.03 12l4.58-4.59z" />
             </svg>
 				</button>
-				<button th:id="'next-'+${state.count}">
+				<button id="next-3">
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
 						viewBox="0 0 24 24">
                 <path fill="none" d="M0 0h24v24H0V0z" />
@@ -92,6 +76,75 @@
 			<hr>
 		</div>
 
+		<div class="film-group">
+			<div id="wrapper-1">
+				<h1>Новинки</h1>
+				<div id="carousel-1">
+					<div id="content-1">
+						<div th:each="film: ${newFilms}">
+							<div class="card">
+								<a id="more-info" th:href="@{/films/{id}(id=${film.id})}"> <img
+									th:src="'../images/'+${film.image}" th:alt="${film.name}"
+									class="item"></a> <a th:href="@{/films/{id}(id=${film.id})}"
+									th:text="${film.name}"></a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<button id="prev-1">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+						viewBox="0 0 24 24">
+                <path fill="none" d="M0 0h24v24H0V0z" />
+                <path
+							d="M15.61 7.41L14.2 6l-6 6 6 6 1.41-1.41L11.03 12l4.58-4.59z" />
+            </svg>
+				</button>
+				<button id="next-1">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+						viewBox="0 0 24 24">
+                <path fill="none" d="M0 0h24v24H0V0z" />
+                <path
+							d="M10.02 6L8.61 7.41 13.19 12l-4.58 4.59L10.02 18l6-6-6-6z" />
+            </svg>
+				</button>
+			</div>
+			<hr>
+		</div>
+
+		<div class="film-group">
+			<div id="wrapper-2">
+				<h1>Совсем скоро</h1>
+				<div id="carousel-2">
+					<div id="content-2">
+						<div th:each="film: ${awaitedFilms}">
+							<div class="card">
+								<a id="more-info" th:href="@{/films/{id}(id=${film.id})}"> <img
+									th:src="'../images/'+${film.image}" th:alt="${film.name}"
+									class="item"></a> <a th:href="@{/films/{id}(id=${film.id})}"
+									th:text="${film.name}"></a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<button id="prev-2">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+						viewBox="0 0 24 24">
+                <path fill="none" d="M0 0h24v24H0V0z" />
+                <path
+							d="M15.61 7.41L14.2 6l-6 6 6 6 1.41-1.41L11.03 12l4.58-4.59z" />
+            </svg>
+				</button>
+				<button id="next-2">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+						viewBox="0 0 24 24">
+                <path fill="none" d="M0 0h24v24H0V0z" />
+                <path
+							d="M10.02 6L8.61 7.41 13.19 12l-4.58 4.59L10.02 18l6-6-6-6z" />
+            </svg>
+				</button>
+			</div>
+			<hr>
+		</div>
 	</div>
 </div>
 
@@ -106,9 +159,9 @@
 		src="https://MomentJS.com/downloads/moment-with-locales.js">
 			</script>
 
-	<script src="/js/remember.js"></script>
-	<script src="/js/caruselRandom.js"></script>
-	<script src="/js/carusel.js"></script>
+	<script src="/js/remember-carusel-state.js"></script>
+	<script src="/js/animation/caruselRandom.js"></script>
+	<script src="/js/animation/carusel.js"></script>
 	<script src="/js/search.js"></script>
 </th:block>
 </html>

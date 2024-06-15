@@ -10,47 +10,48 @@
 </head>
 <div>
 	<div layout:fragment="content">
-		<div sec:authorize="isAuthenticated()" class="d-flex justify-content-around border border-dark">
+		<div sec:authorize="isAuthenticated()"
+			class="d-flex justify-content-around border border-dark">
 			<div class="sort_radio">
 				<h3>Дата</h3>
-				<input type="radio" id="data1" name="data" value="DESC"/>
-				<label for="data1">	Сначала новые</label>
-				<br> 
-				<input type="radio" id="data2" name="data" value="ASC">
-				<label for="data1">	Сначала старые</label>
+				<input type="radio" id="data1" name="data" value="DESC" /> <label
+					for="data1"> Сначала новые</label> <br> <input type="radio"
+					id="data2" name="data" value="ASC"> <label for="data1">
+					Сначала старые</label>
 			</div>
 			<div class="sort_radio">
 				<h3>Алфавит</h3>
 				<input type="radio" id="alphabet1" name="alphabet" value="ASC">
-				<label for="data1">	А-Я </label>
-				<br> 
-				<input type="radio" id="alphabet2" name="alphabet" value="DESC">
-				<label for="data1">	Я-А</label>
+				<label for="data1"> А-Я </label> <br> <input type="radio"
+					id="alphabet2" name="alphabet" value="DESC"> <label
+					for="data1"> Я-А</label>
 			</div>
 			<div>
 				<h3>Жанр</h3>
-				<select  class="js-select2" id= "genre" name="genre" placeholder="Выберите жанр ">
+				<select class="js-select2" id="genre" name="genre"
+					placeholder="Выберите жанр ">
 					<option value="" selected="selected"></option>
-					<option th:each="genre: ${genres}" th:value="${genre.name}" th:text="${genre.name}"></option>
+					<option th:each="genre: ${genres}" th:value="${genre.name}"
+						th:text="${genre.name}"></option>
 				</select>
 			</div>
 			<div>
 				<h3>Страна</h3>
-				<select  class="js-select2" id="country" name="country"
+				<select class="js-select2" id="country" name="country"
 					placeholder="Выберите страну ">
 					<option value="" selected="selected"></option>
-					<option th:each="country: ${countries}" th:value="${country.name}" th:text="${country.name}"></option>
+					<option th:each="country: ${countries}" th:value="${country.name}"
+						th:text="${country.name}"></option>
 				</select>
 			</div>
 		</div>
-		<a sec:authorize="isAuthenticated()"
-		onclick="sort()"
-		 style=" margin-left: 47%;color:black;" href="#">Сортировать</a>
-		
+		<a sec:authorize="isAuthenticated()" onclick="sort()"
+			style="margin-left: 47%; color: black;" href="#">Сортировать</a>
+
 		<ul class="pagination justify-content-center"
 			style="margin: 20px 0; cursor: pointer;"></ul>
 		<a href="/admin/films/add" class="justify-content-center"
-		style="margin: 20px 0;">Добавить новый</a>
+			style="margin: 20px 0;">Добавить новый</a>
 		<div id="films" class="d-flex justify-content-center flex-wrap w-100">
 		</div>
 
@@ -68,6 +69,8 @@
 	<script type="text/JavaScript"
 		src="https://MomentJS.com/downloads/moment-with-locales.js">
 			</script>
+
+	<script src="/js/buildPagination.js"></script>
 	<script src="/js/admin/films/table-paginator.js"></script>
 	<script src="/js/sort.js"></script>
 </th:block>

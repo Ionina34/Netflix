@@ -11,7 +11,7 @@ import ru.netflix.model.Rating;
 
 @Repository
 public interface RatingRepository extends JpaRepository<Rating, Long> {
-	//Запрос для получения оценки фильма
+	/** Запрос для получения оценки фильма */
 	@Query("SELECT r FROM Rating r "
 			  + "JOIN r.user u WHERE u.id = :userId AND r.film.id = :filmId")
 	    List<Rating> getRatingByUserIdAndFilmId(@Param("userId") Long userId, @Param("filmId") Long filmId);

@@ -21,12 +21,11 @@ header {
 
 .body {
 	margin-top: 130px;
-	width:100%;
+	width: 100%;
 }
 
 .active-link {
 	color: rgb(224, 13, 13);
-	font-size: 1.1em;
 	font-family: 'Noto Sans', sans-serif;
 }
 
@@ -40,24 +39,17 @@ header {
 }
 
 .logo {
-	margin: 10px 0 10px 10px;
-	width: 70px;
-}
-
-.logo2 {
-	margin-left: -12px;
 	width: 120px;
+	padding: 25px 5px;
 }
 
 li {
 	display: inline;
 	list-style-type: none;
-	margin-right: 25px;
 }
 
-a{
+a {
 	color: rgb(161, 5, 5);
-	font-size: 1.1em;
 	font-family: 'Noto Sans', sans-serif;
 	text-decoration: none;
 }
@@ -90,19 +82,18 @@ hr {
 	height: 4px;
 }
 
-.genre {
+.film-group {
 	margin-top: 15px;
 }
 
 .search-group {
 	position: relative;
 	display: flex;
-    flex-direction: row;
+	flex-direction: row;
 }
 
 .search-control {
 	width: 100%;
-	height: 40px;
 }
 
 .search-label {
@@ -110,56 +101,43 @@ hr {
 	pointer-events: none;
 	left: 15px;
 	top: 0;
-	line-height: 40px;
 	transition: .3s;
 	color: rgb(224, 13, 13);
 }
 
-.search-image-div{
-	border-color:  rgb(224, 13, 13);
+.search-image-div {
+	border-color: rgb(224, 13, 13);
 	border-width: 3px;
 	margin: auto 0px;
 	padding: 3px 3px;
 	border-radius: 5px;
 }
 
-.search-image{
-	width: 30px;
-	height: 30px;
-}
-
-.search-control:focus ~.search-label,
- .search-control:not(:focus):valid
-	~.search-label {
-	top: -20px;
-	left: 20px;
-	font-size: 17px;
-	height: 30px;
-	background: linear-gradient(to bottom, rgba(0, 0, 0,0) 68%, rgb(17, 34, 51)32% );
+.search-control:focus ~.search-label, .search-control:not(:focus):valid
+	 ~.search-label {
+	background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 68%,
+		rgb(17, 34, 51) 32%);
 }
 
 .search-control:hover ~.search-label {
-	top: -20px;
-	left: 20px;
-	font-size: 17px;
-	height: 30px;
-	background: linear-gradient(to bottom, rgba(0, 0, 0,0) 68% , rgb(17, 34, 51) 32%);
+	background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 68%,
+		rgb(17, 34, 51) 32%);
 	transition: 0.5s;
 	color: rgb(224, 13, 13);
 }
 
-.heart{
+.heart {
 	height: 20px;
 	width: 20px;
 	position: relative;
-	transform:rotate(45deg);
+	transform: rotate(45deg);
 	margin-right: 10px;
 	margin-top: 10px;
 }
 
-.heart::before,.heart::after{
-	content:'';
-	display:block;
+.heart::before, .heart::after {
+	content: '';
+	display: block;
 	height: 20px;
 	width: 20px;
 	border-radius: 50%;
@@ -167,10 +145,134 @@ hr {
 	position: absolute;
 }
 
-.heart::before{
-	top:-10px;
+.heart::before {
+	top: -10px;
 }
 
-.heart::after{
-	left:-10px;
+.heart::after {
+	left: -10px;
+}
+
+@media ( max-width : 767px) {
+	.logo {
+		width: 100px;
+		padding: 20px 5px;
+	}
+	li {
+		margin-right: 15px;
+	}
+	a {
+		font-size: 1em;
+	}
+	.active-link {
+		font-size: 1em;
+	}
+	.search-control {
+		height: 35px;
+	}
+	.search-label {
+		line-height: 35px;
+	}
+	.search-control:focus ~ .search-label, .search-control:not(:focus):valid 
+		~ .search-label {
+		top: -18px;
+		left: 15px;
+		font-size: 15px;
+		height: 25px;
+	}
+	.search-control:hover ~ .search-label {
+		top: -18px;
+		left: 15px;
+		font-size: 15px;
+		height: 25px;
+	}
+	.search-image {
+		width: 25px;
+		height: 25px;
+	}
+	
+	.menu {
+		display: flex;
+		flex-direction: column;
+	}
+}
+
+/* Стили для экранов от 768px до 1199px (планшеты) */
+@media ( min-width : 768px) and (max-width: 1199px) {
+	.logo {
+		width: 110px;
+		padding: 22px 5px;
+	}
+	li {
+		margin-right: 20px;
+	}
+	a {
+		font-size: 1.05em;
+	}
+	.active-link {
+		font-size: 1.05em;
+	}
+	.search-control {
+		height: 37px;
+	}
+	.search-label {
+		line-height: 37px;
+	}
+	.search-control:focus ~ .search-label, .search-control:not(:focus):valid 
+		~ .search-label {
+		top: -19px;
+		left: 17px;
+		font-size: 16px;
+		height: 27px;
+	}
+	.search-control:hover ~ .search-label {
+		top: -19px;
+		left: 17px;
+		font-size: 16px;
+		height: 27px;
+	}
+	.search-image {
+		width: 27px;
+		height: 27px;
+	}
+}
+
+/* Стили для экранов от 1200px и больше (десктопы) */
+@media ( min-width : 1200px) {
+	.logo {
+		width: 120px;
+		padding: 25px 5px;
+	}
+	li {
+		margin-right: 25px;
+	}
+	a {
+		font-size: 1.1em;
+	}
+	.active-link {
+		font-size: 1.1em;
+	}
+	.search-control {
+		height: 40px;
+	}
+	.search-label {
+		line-height: 40px;
+	}
+	.search-control:focus ~ .search-label, .search-control:not(:focus):valid 
+		~ .search-label {
+		top: -20px;
+		left: 20px;
+		font-size: 17px;
+		height: 30px;
+	}
+	.search-control:hover ~ .search-label {
+		top: -20px;
+		left: 20px;
+		font-size: 17px;
+		height: 30px;
+	}
+	.search-image {
+		width: 30px;
+		height: 30px;
+	}
 }

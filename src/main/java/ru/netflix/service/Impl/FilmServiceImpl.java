@@ -1,6 +1,7 @@
 
 package ru.netflix.service.Impl;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,16 +55,37 @@ public class FilmServiceImpl implements FilmService {
 	public Page<Film> findByFilterContainingIgnoreCase(String filter, Pageable pageable) {
 		return repository.findByNameContainingIgnoreCase(filter, pageable);
 	}
+	
+	@Override
+	public Page<Film> getFilmsOrderByNameAndReleaseDate(String orderData, String orderName, Pageable pageable) {
+		return repository.getFilmsOrderByNameAndReleaseDate(orderData, orderName, pageable);
+	}
+
+	@Override
+	public Page<Film> findByGenresNameAndCountriesNameOrderByReleaseDateOrderByName(String genreName,
+			String countryName, String orderData, String orderName, Pageable pageable) {
+		return repository.findByGenresNameAndCountriesNameOrderByReleaseDateOrderByName(genreName, countryName, orderData, orderName, pageable);
+	}
 
 	@Override
 	@Cacheable("film-random")
-	public List<Film> findRandomFilms() {
-		return repository.getTenRandomValues();
+	public Film findRandomFilm() {
+		return repository.getRandomValues();
 	}
 	
 	@Override
 	public List<Film> getTop10FilmsByAverageRating(){
 	    return repository.findTop10ByAverageRating();
+	}
+	
+	@Override
+	public List<Film> findAllByOrderByViewsAsc(){
+		return repository.findAllByOrderByViewsAsc();
+	}
+	
+	@Override 
+	public List<Film> getNewFilms(LocalDate startDate,LocalDate endDate){
+		return repository.getNewFilms(startDate, endDate);
 	}
 
 	@Override
@@ -98,15 +120,6 @@ public class FilmServiceImpl implements FilmService {
 
 	@Override
 	public List<Film> getFavFilmByUserIdAndFilmId(Long userId, Long filmId) {
-		//Т.к связь favourites пренадлежит классу User, то такой метод не подходит
-		/*
-		 * return repository.findAll((root, query, criteriaBuilder) -> { List<Predicate>
-		 * predicates = new ArrayList<>();
-		 * predicates.add(criteriaBuilder.equal(root.join("favourites").get("user_id"),
-		 * userId)); predicates.add(criteriaBuilder.equal(root.get("id"), filmId));
-		 * return criteriaBuilder.and(predicates.toArray(new Predicate[0])); });
-		 */
-		
 		return repository.getFavFilmByUserIdAndFilmId(userId, filmId);
 	}
 
@@ -130,5 +143,11 @@ public class FilmServiceImpl implements FilmService {
 	public void delete(Long filmId) {
 		repository.deleteById(filmId);
 	}
-
+	
+	@Override
+	public void actionWithTheFilm(Long filmId) {
+		Film film=repository.findById(filmId).get();
+		film.setViews(film.getViews()+1);
+		repository.save(film);
+	}
 }

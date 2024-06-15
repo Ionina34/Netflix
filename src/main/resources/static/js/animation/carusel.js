@@ -1,4 +1,4 @@
-element=document.getElementById("content-1");
+let element=document.getElementById("content-1");
 const gap1=element.getElementsByTagName('*').length;
 
 element=document.getElementById("content-2");
@@ -11,7 +11,7 @@ for(i=1;i<=3;i++){
     if(i==1)
         var gap=gap1
     else if(i==2)
-        gap=gap2
+    	gap=gap2
     else gap=gap3
     
     const carousel = document.getElementById("carousel-"+i),
@@ -30,6 +30,7 @@ for(i=1;i<=3;i++){
     }
 });
 prev.addEventListener("click", e => {
+	console.log(1)
     carousel.scrollBy(-(width + gap), 0);
     if (carousel.scrollLeft - width - gap <= 0) {
         prev.style.display = "none";

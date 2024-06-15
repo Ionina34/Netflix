@@ -14,11 +14,15 @@ import ru.netflix.model.Director;
 
 @Repository
 public interface DirectorRepository extends JpaRepository<Director,Long> {
+	/** Полсеения всех режиссеров по странично */
 	Page<Director> findAll(Pageable pageable);
 	
+	/** Режжисер по имени */
 	Director findByName(String name);
+	/** Получение режиссеров по фильму */
 	List<Director> findDirectorsByFilmsId(Long directorId);
 	
+	/** Получения режиссеров с сортировкой по 3 столбцам */
 	@Query("SELECT d FROM Director d "
 			+"ORDER BY CASE WHEN :orderName = 'ASC' THEN d.name END ASC, "
 			+"CASE WHEN :orderName = 'DESC' THEN d.name END DESC, "
