@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    url: jdbc:mysql://db:3306/netflix
+    username: main_user
+    password: main_password
+  jpa:
+    show-sql: true
