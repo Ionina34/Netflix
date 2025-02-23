@@ -4,11 +4,14 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "8000:8000"
     depends_on:
       db:
         condition: service_healthy
     restart: on-failure
+    volumes:
+      - ./src/main/resources/static/images:/app/src/main/resources/static/images
+
   db:
     image: mysql:8.0
     environment:

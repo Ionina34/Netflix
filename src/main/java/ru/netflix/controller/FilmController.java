@@ -94,7 +94,7 @@ public class FilmController {
 		for(Comment comment:commentService.findCommentByFilmsId(filmId)) {
 			List<Rating> rating=ratingService.getRatingByUserIdAndFilmId(comment.getUser().getId(), filmId);
 			comments.add(new FilmScoreAndComment(comment
-					,!rating.isEmpty()?rating.getFirst().getValue():0));
+					,!rating.isEmpty() ? rating.get(0).getValue() :0));
 		}
 		return comments;
 	}

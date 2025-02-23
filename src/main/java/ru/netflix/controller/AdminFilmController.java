@@ -6,16 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.RequiredArgsConstructor;
 import ru.netflix.controller.entities.entity.responce.FilmViewModel;
-import ru.netflix.model.Actor;
-import ru.netflix.model.Country;
-import ru.netflix.model.Director;
-import ru.netflix.model.Genre;
-import ru.netflix.model.Screenwriter;
 import ru.netflix.service.interfaces.ActorService;
 import ru.netflix.service.interfaces.CountryService;
 import ru.netflix.service.interfaces.DirectorService;
