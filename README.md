@@ -9,7 +9,7 @@
   <img alt="Static Badge" src="https://img.shields.io/badge/Bootstrap-pink">
 </p>
 
-<p align="canter">
+<p align="center">
   <img alt="Static Badge" src="https://img.shields.io/badge/java-21v-red">
   <img alt="Static Badge" src="https://img.shields.io/badge/Spring%20boot-3.1.6-blue">
   <img alt="Static Badge" src="https://img.shields.io/badge/MySQ-red">
