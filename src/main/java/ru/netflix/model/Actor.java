@@ -16,6 +16,7 @@ import org.apache.commons.io.FileUtils;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.netflix.service.SaveImages;
 
 @Entity
 @Data
@@ -68,43 +69,19 @@ public class Actor {
 		this.birthday=updateActor.birthday;
 		this.brief_biography=updateActor.brief_biography;
 		if (updateActor.photo != "") {
-			updateActor.saveImage(updateActor.photo, updateActor.name);
+			SaveImages.saveImage(updateActor.photo, updateActor.name, "image_actor.path");
 			this.setPhoto(("actors/" + this.name + ".jpg"));
 		}
 		this.updated_at=LocalDate.now();
 	}
 
+
 	public void addActor(Actor actor) {
 		if (actor.photo != "") {
-			actor.saveImage(actor.photo, actor.name);
+			SaveImages.saveImage(actor.photo, actor.name, "image_actor.path");
 			this.setPhoto(("actors/" + this.name + ".jpg"));
 		}
 		this.setCreated_at(LocalDate.now());
 		this.setUpdated_at(LocalDate.now());
-	}
-	
-	private void saveImage(String image_path, String name) {
-		try {
-			String basePath = loadFilePath();
-			String filename = basePath + name + ".jpg";
-			// connectionTimeout, readTimeout = 10 seconds
-			FileUtils.copyURLToFile(new URL(image_path), new File(filename), 10000, 10000);
-
-		} catch (IOException e) {
-			System.out.println(e);
-		}
-	}
-	
-	private String loadFilePath() {
-		Properties properties=new Properties();
-		Resource resource=new ClassPathResource("config.properties");
-		
-		try(InputStream inputStream=resource.getInputStream()){
-			properties.load(inputStream);
-			return properties.getProperty("image_actor.path");
-		}
-		catch (IOException e) {
-            throw new RuntimeException("Failed to load config.properties", e);
-        }
 	}
 }

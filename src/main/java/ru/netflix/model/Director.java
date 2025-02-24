@@ -15,6 +15,7 @@ import org.springframework.core.io.Resource;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import ru.netflix.service.SaveImages;
 
 @Entity
 @Data
@@ -75,7 +76,7 @@ public class Director {
 		this.birthday=updateDirector.birthday;
 		this.brief_biography=updateDirector.brief_biography;
 		if (updateDirector.photo != "") {
-			updateDirector.saveImage(updateDirector.photo, updateDirector.name);
+			SaveImages.saveImage(updateDirector.photo, updateDirector.name, "image_director.path");
 			this.setPhoto(("directors/" + this.name + ".jpg"));
 		}
 		this.updated_at=LocalDate.now();
@@ -86,34 +87,9 @@ public class Director {
 		this.birthday=updateDirector.getBirthday();
 		this.brief_biography=updateDirector.getBrief_biography();
 		if (updateDirector.getPhoto() != "") {
-			this.saveImage(updateDirector.getPhoto(), updateDirector.getName());
+			SaveImages.saveImage(updateDirector.getPhoto(), updateDirector.getName(), "image_director.path");
 			this.setPhoto(("directors/" + this.name + ".jpg"));
 		}
 		this.updated_at=LocalDate.now();
-	}
-	
-	private void saveImage(String image_path, String name) {
-		try {
-			String basePath = loadFilePath();
-			String filename = basePath + name + ".jpg";
-			// connectionTimeout, readTimeout = 10 seconds
-			FileUtils.copyURLToFile(new URL(image_path), new File(filename), 10000, 10000);
-
-		} catch (IOException e) {
-			System.out.println(e);
-		}
-	}
-	
-	private String loadFilePath() {
-		Properties properties=new Properties();
-		Resource resource=new ClassPathResource("config.properties");
-		
-		try(InputStream inputStream=resource.getInputStream()){
-			properties.load(inputStream);
-			return properties.getProperty("image_director.path");
-		}
-		catch (IOException e) {
-            throw new RuntimeException("Failed to load config.properties", e);
-        }
 	}
 }

@@ -19,6 +19,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.netflix.service.SaveImages;
 
 @Entity
 @Table(name = "films")
@@ -107,7 +108,7 @@ public class Film {
 		this.release_date = updateFilm.release_date;
 		this.length = updateFilm.length;
 		if (updateFilm.image != "") {
-			updateFilm.saveImage(updateFilm.image, updateFilm.name);
+			SaveImages.saveImage(updateFilm.image, updateFilm.name, "image_films.path");
 			this.setImage(("films/" + this.name + ".jpg"));
 		}
 		this.setUpdated_at(LocalDate.now());
@@ -115,35 +116,10 @@ public class Film {
 	
 	public void addFilm(Film film) {
 		if (film.image != "") {
-			film.saveImage(film.image, film.name);
+			SaveImages.saveImage(film.image, film.name, "image_films.path");
 			this.setImage(("films/" + this.name + ".jpg"));
 		}
 		this.setCreated_at(LocalDate.now());
 		this.setUpdated_at(LocalDate.now());
-	}
-
-	private void saveImage(String image_path, String name) {
-		try {
-			String basePath = loadFilePath();
-			String filename = basePath + name + ".jpg";
-			// connectionTimeout, readTimeout = 10 seconds
-			FileUtils.copyURLToFile(new URL(image_path), new File(filename), 10000, 10000);
-
-		} catch (IOException e) {
-			System.out.println(e);
-		}
-	}
-	
-	private String loadFilePath() {
-		Properties properties=new Properties();
-		Resource resource=new ClassPathResource("config.properties");
-		
-		try(InputStream inputStream=resource.getInputStream()){
-			properties.load(inputStream);
-			return properties.getProperty("image_films.path");
-		}
-		catch (IOException e) {
-            throw new RuntimeException("Failed to load config.properties", e);
-        }
 	}
 }
