@@ -37,6 +37,12 @@
   <img src="https://github.com/user-attachments/assets/9b7b87d1-6a4d-4cec-9468-d77a222484ac">
 </p>
 
+Данные для входа в админ-панель:
+```
+login: admin@mail.ru
+password: 123456
+```
+
 ## Установка
  Клонируйте репозиторий:
    ```bash
